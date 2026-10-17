@@ -1,0 +1,759 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2960" height="1662" viewBox="0 0 2960 1662" font-family="Helvetica, Arial, sans-serif">
+<title>Commerce binding ontology diagram</title>
+<style>
+  .box { fill: #ffffff; stroke: #5f6368; stroke-width: 1.2; }
+  .box-ext { fill: #f8f9fa; stroke: #9aa0a6; stroke-width: 1.2; stroke-dasharray: 5 3; }
+  .head-cb { fill: #1a5c6b; }
+  .head-ext { fill: #dadce0; }
+  .cls-name { font-size: 13px; font-weight: bold; fill: #ffffff; }
+  .cls-name-dark { font-size: 13px; font-weight: bold; fill: #202124; }
+  .attr { font-size: 11px; fill: #202124; }
+  .attr-def { font-size: 10.5px; font-style: italic; fill: #5f6368; }
+  .assoc { fill: none; stroke: #80868b; stroke-width: 1.1; }
+  .gen { fill: none; stroke: #202124; stroke-width: 1.2; }
+  .gen-head { fill: #ffffff; stroke: #202124; stroke-width: 1.2; }
+  .edge-label { font-size: 10px; fill: #3c4043; paint-order: stroke; stroke: #ffffff; stroke-width: 3px; stroke-linejoin: round; }
+  .grid { stroke: #dadce0; stroke-width: 1; }
+  .row-head { font-size: 11.5px; font-weight: bold; fill: #202124; }
+  .kind { font-size: 10px; fill: #80868b; }
+  .cell { font-size: 11px; fill: #202124; }
+  .code-cell { font-size: 10.5px; fill: #202124; font-family: Menlo, Consolas, monospace; }
+  .cell-empty { font-size: 11px; fill: #9aa0a6; }
+  .title { font-size: 20px; font-weight: bold; fill: #202124; }
+  .subtitle { font-size: 12px; fill: #5f6368; }
+  .panel-title { font-size: 15px; font-weight: bold; fill: #202124; }
+</style>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#80868b"/>
+  </marker>
+</defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g id="header">
+<text x="40.0" y="34.0" class="title" text-anchor="start">Commerce binding ontology</text>
+<text x="40.0" y="56.0" class="subtitle" text-anchor="start">Generated from commerce_binding.ttl: 4 sources, 74 concept bindings, 576 property bindings. Core terms (grey) come from commerce_core.ttl.</text>
+<text x="40.0" y="120.0" class="panel-title" text-anchor="start">1. Binding model: the general-purpose cb: vocabulary</text>
+<text x="40.0" y="138.0" class="subtitle" text-anchor="start">Every source is described with these classes; adding a store adds instances, never new concepts. Arrows: object properties (0..1 = functional, * = many). Hollow triangle = subclass.</text>
+</g>
+<g id="binding-model">
+<path d="M817.0,456 L825.0,444 L833.0,456 Z" class="gen-head"/>
+<path d="M825.0,456 V484" class="gen"/>
+<path d="M825.0,484 H495.0 V620" class="gen"/>
+<path d="M825.0,484 H825.0 V620" class="gen"/>
+<path d="M825.0,484 H1155.0 V620" class="gen"/>
+<path d="M370.0,183.0 L290.0,188.0" class="assoc" marker-end="url(#arrow)"><title>Table → SourceSystem</title></path>
+<path d="M437.3,380.0 L233.1,242.0" class="assoc" marker-end="url(#arrow)"><title>ConceptBinding → SourceSystem</title></path>
+<path d="M700.0,188.0 L620.0,183.0" class="assoc" marker-end="url(#arrow)"><title>Column → Table</title></path>
+<path d="M600.5,380.0 L1087.4,200.0" class="assoc" marker-end="url(#arrow)"><title>ConceptBinding → CoreClass</title></path>
+<path d="M495.0,380.0 L495.0,200.0" class="assoc" marker-end="url(#arrow)"><title>ConceptBinding → Table</title></path>
+<path d="M552.7,380.0 L756.9,242.0" class="assoc" marker-end="url(#arrow)"><title>ConceptBinding → Column</title></path>
+<path d="M700.0,414.7 L620.0,416.3" class="assoc" marker-end="url(#arrow)"><title>PropertyBinding → ConceptBinding</title></path>
+<path d="M950.0,409.3 L1030.0,407.7" class="assoc" marker-end="url(#arrow)"><title>PropertyBinding → CoreProperty</title></path>
+<path d="M825.0,380.0 L825.0,242.0" class="assoc" marker-end="url(#arrow)"><title>PropertyBinding → Column</title></path>
+<path d="M737.0,444.0 L253.0,620.0" class="assoc" marker-end="url(#arrow)"><title>PropertyBinding → ValueFormat</title></path>
+<path d="M771.4,620.0 L548.6,458.0" class="assoc" marker-end="url(#arrow)"><title>RelationBinding → ConceptBinding</title></path>
+<path d="M798.4,620.0 L512.0,200.0" class="assoc" marker-end="url(#arrow)"><title>RelationBinding → Table</title></path>
+<path d="M875.7,620.0 L1122.5,430.0" class="assoc" marker-end="url(#arrow)"><title>RelationBinding → CoreProperty</title></path>
+<path d="M1280.0,645.0 L1360.0,645.0" class="assoc" marker-end="url(#arrow)"><title>ValueBinding → ValueMap</title></path>
+<path d="M1485.0,620.0 L1485.0,430.0" class="assoc" marker-end="url(#arrow)"><title>ValueMap → CodeIndividual</title></path>
+<path d="M1189.4,620.0 L1450.6,430.0" class="assoc" marker-end="url(#arrow)"><title>ValueBinding → CodeIndividual</title></path>
+<g id="model-SourceSystem" class="uml-class" transform="translate(40,150)">
+<rect width="250" height="92" rx="4" class="box"/>
+<rect width="250" height="24" rx="4" class="head-cb"/>
+<text x="125.0" y="16.0" class="cls-name" text-anchor="middle">cb:SourceSystem</text>
+<text x="8.0" y="41.0" class="attr" text-anchor="start">dialect : string</text>
+<text x="8.0" y="55.0" class="attr" text-anchor="start">sampleDatabase : string</text>
+<text x="8.0" y="69.0" class="attr" text-anchor="start">schemaFile : string</text>
+<text x="8.0" y="83.0" class="attr" text-anchor="start">sourceCode : string</text>
+</g>
+<g id="model-Table" class="uml-class" transform="translate(370,150)">
+<rect width="250" height="50" rx="4" class="box"/>
+<rect width="250" height="24" rx="4" class="head-cb"/>
+<text x="125.0" y="16.0" class="cls-name" text-anchor="middle">cb:Table</text>
+<text x="8.0" y="41.0" class="attr" text-anchor="start">tableName : string</text>
+</g>
+<g id="model-Column" class="uml-class" transform="translate(700,150)">
+<rect width="250" height="92" rx="4" class="box"/>
+<rect width="250" height="24" rx="4" class="head-cb"/>
+<text x="125.0" y="16.0" class="cls-name" text-anchor="middle">cb:Column</text>
+<text x="8.0" y="41.0" class="attr" text-anchor="start">columnName : string</text>
+<text x="8.0" y="55.0" class="attr" text-anchor="start">declaredType : string</text>
+<text x="8.0" y="69.0" class="attr" text-anchor="start">isNullable : boolean</text>
+<text x="8.0" y="83.0" class="attr" text-anchor="start">isPrimaryKey : boolean</text>
+</g>
+<g id="model-CoreClass" class="ext-class" transform="translate(1030,150)">
+<rect width="250" height="50" rx="4" class="box-ext"/>
+<rect width="250" height="24" rx="4" class="head-ext"/>
+<text x="125.0" y="16.0" class="cls-name-dark" text-anchor="middle">owl:Class</text>
+<text x="8.0" y="41.0" class="attr-def" text-anchor="start">a core concept, e.g. cc:Order</text>
+</g>
+<g id="model-ConceptBinding" class="uml-class" transform="translate(370,380)">
+<rect width="250" height="78" rx="4" class="box"/>
+<rect width="250" height="24" rx="4" class="head-cb"/>
+<text x="125.0" y="16.0" class="cls-name" text-anchor="middle">cb:ConceptBinding</text>
+<text x="8.0" y="41.0" class="attr" text-anchor="start">isVirtual : boolean</text>
+<text x="8.0" y="55.0" class="attr" text-anchor="start">keyExpressions : list</text>
+<text x="8.0" y="69.0" class="attr" text-anchor="start">rowFilter : string</text>
+</g>
+<g id="model-PropertyBinding" class="uml-class" transform="translate(700,380)">
+<rect width="250" height="64" rx="4" class="box"/>
+<rect width="250" height="24" rx="4" class="head-cb"/>
+<text x="125.0" y="16.0" class="cls-name" text-anchor="middle">cb:PropertyBinding</text>
+<text x="8.0" y="41.0" class="attr" text-anchor="start">constantValue : Literal</text>
+<text x="8.0" y="55.0" class="attr" text-anchor="start">sourceExpression : string</text>
+</g>
+<g id="model-CoreProperty" class="ext-class" transform="translate(1030,380)">
+<rect width="250" height="50" rx="4" class="box-ext"/>
+<rect width="250" height="24" rx="4" class="head-ext"/>
+<text x="125.0" y="16.0" class="cls-name-dark" text-anchor="middle">core property</text>
+<text x="8.0" y="41.0" class="attr-def" text-anchor="start">e.g. cc:grandTotal, cc:countryCode</text>
+</g>
+<g id="model-CodeIndividual" class="ext-class" transform="translate(1360,380)">
+<rect width="250" height="50" rx="4" class="box-ext"/>
+<rect width="250" height="24" rx="4" class="head-ext"/>
+<text x="125.0" y="16.0" class="cls-name-dark" text-anchor="middle">code-list individual</text>
+<text x="8.0" y="41.0" class="attr-def" text-anchor="start">e.g. cc:OrderStatus_PLACED</text>
+</g>
+<g id="model-ValueFormat" class="uml-class" transform="translate(40,620)">
+<rect width="250" height="64" rx="4" class="box"/>
+<rect width="250" height="24" rx="4" class="head-cb"/>
+<text x="125.0" y="16.0" class="cls-name" text-anchor="middle">cb:ValueFormat</text>
+<text x="8.0" y="41.0" class="attr" text-anchor="start">conversionTemplate : string</text>
+<text x="8.0" y="55.0" class="attr" text-anchor="start">formatDescription : string</text>
+</g>
+<g id="model-AttributeBinding" class="uml-class" transform="translate(370,620)">
+<rect width="250" height="50" rx="4" class="box"/>
+<rect width="250" height="24" rx="4" class="head-cb"/>
+<text x="125.0" y="16.0" class="cls-name" text-anchor="middle">cb:AttributeBinding</text>
+<text x="8.0" y="41.0" class="attr" text-anchor="start">toCoreExpression : string</text>
+</g>
+<g id="model-RelationBinding" class="uml-class" transform="translate(700,620)">
+<rect width="250" height="78" rx="4" class="box"/>
+<rect width="250" height="24" rx="4" class="head-cb"/>
+<text x="125.0" y="16.0" class="cls-name" text-anchor="middle">cb:RelationBinding</text>
+<text x="8.0" y="41.0" class="attr" text-anchor="start">joinExpressions : list</text>
+<text x="8.0" y="55.0" class="attr" text-anchor="start">throughObjectColumns : list</text>
+<text x="8.0" y="69.0" class="attr" text-anchor="start">throughSubjectColumns : list</text>
+</g>
+<g id="model-ValueBinding" class="uml-class" transform="translate(1030,620)">
+<rect width="250" height="50" rx="4" class="box"/>
+<rect width="250" height="24" rx="4" class="head-cb"/>
+<text x="125.0" y="16.0" class="cls-name" text-anchor="middle">cb:ValueBinding</text>
+<text x="8.0" y="41.0" class="attr" text-anchor="start">matchOnNotation : boolean</text>
+</g>
+<g id="model-ValueMap" class="uml-class" transform="translate(1360,620)">
+<rect width="250" height="50" rx="4" class="box"/>
+<rect width="250" height="24" rx="4" class="head-cb"/>
+<text x="125.0" y="16.0" class="cls-name" text-anchor="middle">cb:ValueMap</text>
+<text x="8.0" y="41.0" class="attr" text-anchor="start">sourceValue : string</text>
+</g>
+<text x="330.0" y="185.5" class="edge-label" text-anchor="middle">inSource 0..1</text>
+<text x="335.2" y="311.0" class="edge-label" text-anchor="middle">inSource 0..1</text>
+<text x="660.0" y="185.5" class="edge-label" text-anchor="middle">inTable 0..1</text>
+<text x="843.9" y="290.0" class="edge-label" text-anchor="middle">bindsClass 0..1</text>
+<text x="495.0" y="290.0" class="edge-label" text-anchor="middle">fromTable 0..1</text>
+<text x="654.8" y="311.0" class="edge-label" text-anchor="middle">keyColumn *</text>
+<text x="660.0" y="415.5" class="edge-label" text-anchor="middle">ofConceptBinding 0..1</text>
+<text x="990.0" y="408.5" class="edge-label" text-anchor="middle">bindsProperty 0..1</text>
+<text x="825.0" y="310.5" class="edge-label" text-anchor="middle">sourceColumn 0..1</text>
+<text x="825.0" y="322.5" class="edge-label" text-anchor="middle">usesColumn *</text>
+<text x="495.0" y="532.0" class="edge-label" text-anchor="middle">valueFormat 0..1</text>
+<text x="660.0" y="539.0" class="edge-label" text-anchor="middle">targetBinding 0..1</text>
+<text x="683.9" y="452.0" class="edge-label" text-anchor="middle">throughTable 0..1</text>
+<text x="999.1" y="525.0" class="edge-label" text-anchor="middle">matchOnProperty 0..1</text>
+<text x="1320.0" y="645.0" class="edge-label" text-anchor="middle">valueMap *</text>
+<text x="1485.0" y="525.0" class="edge-label" text-anchor="middle">targetIndividual 0..1</text>
+<text x="1320.0" y="525.0" class="edge-label" text-anchor="middle">constantIndividual 0..1</text>
+</g>
+<g id="coverage-matrix">
+<text x="40.0" y="788.0" class="panel-title" text-anchor="start">2. Coverage: which table holds each core concept in each source</text>
+<text x="40.0" y="806.0" class="subtitle" text-anchor="start">⊂ = only rows matching a filter (e.g. qty &lt; 0)   ·   (virtual) = no table, one implied instance   ·   — = the source cannot provide the concept</text>
+<g id="coverage-head-acme"><rect x="230" y="818" width="270" height="26" fill="#2e7d4f"/><text x="365.0" y="835.0" class="cls-name" text-anchor="middle">acme</text></g>
+<g id="coverage-head-bigriver"><rect x="500" y="818" width="270" height="26" fill="#2b5f9e"/><text x="635.0" y="835.0" class="cls-name" text-anchor="middle">bigriver</text></g>
+<g id="coverage-head-bobsuncle"><rect x="770" y="818" width="270" height="26" fill="#b5651d"/><text x="905.0" y="835.0" class="cls-name" text-anchor="middle">bobsuncle</text></g>
+<g id="coverage-head-canonical"><rect x="1040" y="818" width="270" height="26" fill="#6a4c93"/><text x="1175.0" y="835.0" class="cls-name" text-anchor="middle">canonical</text></g>
+<g id="coverage-row-Manufacturer"><rect x="40" y="844" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="863.0" class="row-head" text-anchor="start">Manufacturer</text></g>
+<g id="coverage-Manufacturer-acme"><rect x="230" y="844" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="863.0" class="cell" text-anchor="start">Brand ⊂ · 1 prop</text>
+</g>
+<g id="coverage-Manufacturer-bigriver"><rect x="500" y="844" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="863.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Manufacturer-bobsuncle"><rect x="770" y="844" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="863.0" class="cell" text-anchor="start">brand · 6 props</text>
+</g>
+<g id="coverage-Manufacturer-canonical"><rect x="1040" y="844" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="863.0" class="cell" text-anchor="start">brand ⊂ · 5 props</text>
+</g>
+<g id="coverage-row-Brand"><rect x="40" y="874" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="893.0" class="row-head" text-anchor="start">Brand</text></g>
+<g id="coverage-Brand-acme"><rect x="230" y="874" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="893.0" class="cell" text-anchor="start">Brand · 7 props</text>
+</g>
+<g id="coverage-Brand-bigriver"><rect x="500" y="874" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="893.0" class="cell" text-anchor="start">PRODUCT ⊂ · 1 prop</text>
+</g>
+<g id="coverage-Brand-bobsuncle"><rect x="770" y="874" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="893.0" class="cell" text-anchor="start">brand · 2 props</text>
+</g>
+<g id="coverage-Brand-canonical"><rect x="1040" y="874" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="893.0" class="cell" text-anchor="start">brand · 7 props</text>
+</g>
+<g id="coverage-row-ProductModel"><rect x="40" y="904" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="923.0" class="row-head" text-anchor="start">ProductModel</text></g>
+<g id="coverage-ProductModel-acme"><rect x="230" y="904" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="923.0" class="cell" text-anchor="start">Model · 6 props</text>
+</g>
+<g id="coverage-ProductModel-bigriver"><rect x="500" y="904" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="923.0" class="cell" text-anchor="start">PRODUCT ⊂ · 2 props</text>
+</g>
+<g id="coverage-ProductModel-bobsuncle"><rect x="770" y="904" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="923.0" class="cell" text-anchor="start">brand · 7 props</text>
+</g>
+<g id="coverage-ProductModel-canonical"><rect x="1040" y="904" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="923.0" class="cell" text-anchor="start">product ⊂ · 6 props</text>
+</g>
+<g id="coverage-row-Category"><rect x="40" y="934" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="953.0" class="row-head" text-anchor="start">Category</text></g>
+<g id="coverage-Category-acme"><rect x="230" y="934" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="953.0" class="cell" text-anchor="start">CatalogCategory · 8 props</text>
+</g>
+<g id="coverage-Category-bigriver"><rect x="500" y="934" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="953.0" class="cell" text-anchor="start">PRODUCT ⊂ · 3 props</text>
+</g>
+<g id="coverage-Category-bobsuncle"><rect x="770" y="934" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="953.0" class="cell" text-anchor="start">product ⊂ · 2 props</text>
+</g>
+<g id="coverage-Category-canonical"><rect x="1040" y="934" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="953.0" class="cell" text-anchor="start">category · 10 props</text>
+</g>
+<g id="coverage-row-ProductAttribute"><rect x="40" y="964" width="190" height="44" fill="#ffffff" class="grid"/><text x="48.0" y="983.0" class="row-head" text-anchor="start">ProductAttribute</text></g>
+<g id="coverage-ProductAttribute-acme"><rect x="230" y="964" width="270" height="44" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="983.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-ProductAttribute-bigriver"><rect x="500" y="964" width="270" height="44" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="983.0" class="cell" text-anchor="start">PRODUCT_TAGS · 6 props</text>
+</g>
+<g id="coverage-ProductAttribute-bobsuncle"><rect x="770" y="964" width="270" height="44" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="983.0" class="cell" text-anchor="start">product ⊂ · 4 props</text>
+<text x="778.0" y="997.0" class="cell" text-anchor="start">product ⊂ · 4 props</text>
+</g>
+<g id="coverage-ProductAttribute-canonical"><rect x="1040" y="964" width="270" height="44" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="983.0" class="cell" text-anchor="start">product_attribute · 6 props</text>
+</g>
+<g id="coverage-row-Product"><rect x="40" y="1008" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="1027.0" class="row-head" text-anchor="start">Product</text></g>
+<g id="coverage-Product-acme"><rect x="230" y="1008" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="1027.0" class="cell" text-anchor="start">Model · 14 props</text>
+</g>
+<g id="coverage-Product-bigriver"><rect x="500" y="1008" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="1027.0" class="cell" text-anchor="start">PRODUCT · 13 props</text>
+</g>
+<g id="coverage-Product-bobsuncle"><rect x="770" y="1008" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1027.0" class="cell" text-anchor="start">product · 15 props</text>
+</g>
+<g id="coverage-Product-canonical"><rect x="1040" y="1008" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1027.0" class="cell" text-anchor="start">product · 23 props</text>
+</g>
+<g id="coverage-row-Promotion"><rect x="40" y="1038" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="1057.0" class="row-head" text-anchor="start">Promotion</text></g>
+<g id="coverage-Promotion-acme"><rect x="230" y="1038" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="1057.0" class="cell" text-anchor="start">Promotions · 17 props</text>
+</g>
+<g id="coverage-Promotion-bigriver"><rect x="500" y="1038" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="1057.0" class="cell" text-anchor="start">PROMOTIONS · 16 props</text>
+</g>
+<g id="coverage-Promotion-bobsuncle"><rect x="770" y="1038" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1057.0" class="cell" text-anchor="start">promotion · 13 props</text>
+</g>
+<g id="coverage-Promotion-canonical"><rect x="1040" y="1038" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1057.0" class="cell" text-anchor="start">promotion · 25 props</text>
+</g>
+<g id="coverage-row-WarrantyPlan"><rect x="40" y="1068" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="1087.0" class="row-head" text-anchor="start">WarrantyPlan</text></g>
+<g id="coverage-WarrantyPlan-acme"><rect x="230" y="1068" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1087.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-WarrantyPlan-bigriver"><rect x="500" y="1068" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1087.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-WarrantyPlan-bobsuncle"><rect x="770" y="1068" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1087.0" class="cell" text-anchor="start">product ⊂ · 7 props</text>
+</g>
+<g id="coverage-WarrantyPlan-canonical"><rect x="1040" y="1068" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1087.0" class="cell" text-anchor="start">warranty_plan · 7 props</text>
+</g>
+<g id="coverage-row-Offer"><rect x="40" y="1098" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="1117.0" class="row-head" text-anchor="start">Offer</text></g>
+<g id="coverage-Offer-acme"><rect x="230" y="1098" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="1117.0" class="cell" text-anchor="start">Model · 7 props</text>
+</g>
+<g id="coverage-Offer-bigriver"><rect x="500" y="1098" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="1117.0" class="cell" text-anchor="start">ITEM · 5 props</text>
+</g>
+<g id="coverage-Offer-bobsuncle"><rect x="770" y="1098" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1117.0" class="cell" text-anchor="start">product · 6 props</text>
+</g>
+<g id="coverage-Offer-canonical"><rect x="1040" y="1098" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1117.0" class="cell" text-anchor="start">offer · 9 props</text>
+</g>
+<g id="coverage-row-InventoryPosition"><rect x="40" y="1128" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="1147.0" class="row-head" text-anchor="start">InventoryPosition</text></g>
+<g id="coverage-InventoryPosition-acme"><rect x="230" y="1128" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1147.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-InventoryPosition-bigriver"><rect x="500" y="1128" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1147.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-InventoryPosition-bobsuncle"><rect x="770" y="1128" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1147.0" class="cell" text-anchor="start">inventory · 8 props</text>
+</g>
+<g id="coverage-InventoryPosition-canonical"><rect x="1040" y="1128" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1147.0" class="cell" text-anchor="start">inventory · 9 props</text>
+</g>
+<g id="coverage-row-Seller"><rect x="40" y="1158" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="1177.0" class="row-head" text-anchor="start">Seller</text></g>
+<g id="coverage-Seller-acme"><rect x="230" y="1158" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="1177.0" class="cell" text-anchor="start">(virtual) · 3 props</text>
+</g>
+<g id="coverage-Seller-bigriver"><rect x="500" y="1158" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="1177.0" class="cell" text-anchor="start">STORE · 12 props</text>
+</g>
+<g id="coverage-Seller-bobsuncle"><rect x="770" y="1158" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1177.0" class="cell" text-anchor="start">(virtual) · 3 props</text>
+</g>
+<g id="coverage-Seller-canonical"><rect x="1040" y="1158" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1177.0" class="cell" text-anchor="start">seller · 12 props</text>
+</g>
+<g id="coverage-row-AppliedDiscount"><rect x="40" y="1188" width="190" height="44" fill="#f8f9fa" class="grid"/><text x="48.0" y="1207.0" class="row-head" text-anchor="start">AppliedDiscount</text></g>
+<g id="coverage-AppliedDiscount-acme"><rect x="230" y="1188" width="270" height="44" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="1207.0" class="cell" text-anchor="start">OrderItem ⊂ · 4 props</text>
+<text x="238.0" y="1221.0" class="cell" text-anchor="start">Order ⊂ · 3 props</text>
+</g>
+<g id="coverage-AppliedDiscount-bigriver"><rect x="500" y="1188" width="270" height="44" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="1207.0" class="cell" text-anchor="start">ITEM ⊂ · 5 props</text>
+<text x="508.0" y="1221.0" class="cell" text-anchor="start">SHOPPING_CART ⊂ · 2 props</text>
+</g>
+<g id="coverage-AppliedDiscount-bobsuncle"><rect x="770" y="1188" width="270" height="44" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1207.0" class="cell" text-anchor="start">cart_item ⊂ · 5 props</text>
+</g>
+<g id="coverage-AppliedDiscount-canonical"><rect x="1040" y="1188" width="270" height="44" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1207.0" class="cell" text-anchor="start">applied_discount · 6 props</text>
+</g>
+<g id="coverage-row-OrderLine"><rect x="40" y="1232" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="1251.0" class="row-head" text-anchor="start">OrderLine</text></g>
+<g id="coverage-OrderLine-acme"><rect x="230" y="1232" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="1251.0" class="cell" text-anchor="start">OrderItem · 11 props</text>
+</g>
+<g id="coverage-OrderLine-bigriver"><rect x="500" y="1232" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="1251.0" class="cell" text-anchor="start">ITEM · 16 props</text>
+</g>
+<g id="coverage-OrderLine-bobsuncle"><rect x="770" y="1232" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1251.0" class="cell" text-anchor="start">cart_item ⊂ · 12 props</text>
+</g>
+<g id="coverage-OrderLine-canonical"><rect x="1040" y="1232" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1251.0" class="cell" text-anchor="start">order_item · 21 props</text>
+</g>
+<g id="coverage-row-Warehouse"><rect x="40" y="1262" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="1281.0" class="row-head" text-anchor="start">Warehouse</text></g>
+<g id="coverage-Warehouse-acme"><rect x="230" y="1262" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1281.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Warehouse-bigriver"><rect x="500" y="1262" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1281.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Warehouse-bobsuncle"><rect x="770" y="1262" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1281.0" class="cell" text-anchor="start">inventory · 2 props</text>
+</g>
+<g id="coverage-Warehouse-canonical"><rect x="1040" y="1262" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1281.0" class="cell" text-anchor="start">warehouse · 5 props</text>
+</g>
+<g id="coverage-row-Customer"><rect x="40" y="1292" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="1311.0" class="row-head" text-anchor="start">Customer</text></g>
+<g id="coverage-Customer-acme"><rect x="230" y="1292" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="1311.0" class="cell" text-anchor="start">Order ⊂ · 2 props</text>
+</g>
+<g id="coverage-Customer-bigriver"><rect x="500" y="1292" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="1311.0" class="cell" text-anchor="start">SHOPPING_CART ⊂ · 2 props</text>
+</g>
+<g id="coverage-Customer-bobsuncle"><rect x="770" y="1292" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1311.0" class="cell" text-anchor="start">cart ⊂ · 3 props</text>
+</g>
+<g id="coverage-Customer-canonical"><rect x="1040" y="1292" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1311.0" class="cell" text-anchor="start">customer · 14 props</text>
+</g>
+<g id="coverage-row-Order"><rect x="40" y="1322" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="1341.0" class="row-head" text-anchor="start">Order</text></g>
+<g id="coverage-Order-acme"><rect x="230" y="1322" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="1341.0" class="cell" text-anchor="start">Order · 14 props</text>
+</g>
+<g id="coverage-Order-bigriver"><rect x="500" y="1322" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="1341.0" class="cell" text-anchor="start">SHOPPING_CART · 11 props</text>
+</g>
+<g id="coverage-Order-bobsuncle"><rect x="770" y="1322" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1341.0" class="cell" text-anchor="start">cart · 14 props</text>
+</g>
+<g id="coverage-Order-canonical"><rect x="1040" y="1322" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1341.0" class="cell" text-anchor="start">customer_order · 18 props</text>
+</g>
+<g id="coverage-row-Address"><rect x="40" y="1352" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="1371.0" class="row-head" text-anchor="start">Address</text></g>
+<g id="coverage-Address-acme"><rect x="230" y="1352" width="270" height="30" fill="#eef6f1" class="grid"/>
+<text x="238.0" y="1371.0" class="cell" text-anchor="start">Order ⊂ · 2 props</text>
+</g>
+<g id="coverage-Address-bigriver"><rect x="500" y="1352" width="270" height="30" fill="#edf2f9" class="grid"/>
+<text x="508.0" y="1371.0" class="cell" text-anchor="start">SHOPPING_CART ⊂ · 2 props</text>
+</g>
+<g id="coverage-Address-bobsuncle"><rect x="770" y="1352" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1371.0" class="cell" text-anchor="start">cart ⊂ · 2 props</text>
+</g>
+<g id="coverage-Address-canonical"><rect x="1040" y="1352" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1371.0" class="cell" text-anchor="start">address · 8 props</text>
+</g>
+<g id="coverage-row-Shipment"><rect x="40" y="1382" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="1401.0" class="row-head" text-anchor="start">Shipment</text></g>
+<g id="coverage-Shipment-acme"><rect x="230" y="1382" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1401.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Shipment-bigriver"><rect x="500" y="1382" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1401.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Shipment-bobsuncle"><rect x="770" y="1382" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="778.0" y="1401.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Shipment-canonical"><rect x="1040" y="1382" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1401.0" class="cell" text-anchor="start">shipment · 12 props</text>
+</g>
+<g id="coverage-row-ShipmentLine"><rect x="40" y="1412" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="1431.0" class="row-head" text-anchor="start">ShipmentLine</text></g>
+<g id="coverage-ShipmentLine-acme"><rect x="230" y="1412" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1431.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-ShipmentLine-bigriver"><rect x="500" y="1412" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1431.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-ShipmentLine-bobsuncle"><rect x="770" y="1412" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="778.0" y="1431.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-ShipmentLine-canonical"><rect x="1040" y="1412" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1431.0" class="cell" text-anchor="start">shipment_item · 3 props</text>
+</g>
+<g id="coverage-row-Payment"><rect x="40" y="1442" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="1461.0" class="row-head" text-anchor="start">Payment</text></g>
+<g id="coverage-Payment-acme"><rect x="230" y="1442" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1461.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Payment-bigriver"><rect x="500" y="1442" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1461.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Payment-bobsuncle"><rect x="770" y="1442" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="778.0" y="1461.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Payment-canonical"><rect x="1040" y="1442" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1461.0" class="cell" text-anchor="start">payment · 12 props</text>
+</g>
+<g id="coverage-row-Refund"><rect x="40" y="1472" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="1491.0" class="row-head" text-anchor="start">Refund</text></g>
+<g id="coverage-Refund-acme"><rect x="230" y="1472" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1491.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Refund-bigriver"><rect x="500" y="1472" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1491.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Refund-bobsuncle"><rect x="770" y="1472" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1491.0" class="cell" text-anchor="start">cart ⊂ · 5 props</text>
+</g>
+<g id="coverage-Refund-canonical"><rect x="1040" y="1472" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1491.0" class="cell" text-anchor="start">refund · 9 props</text>
+</g>
+<g id="coverage-row-ReturnAuthorization"><rect x="40" y="1502" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="1521.0" class="row-head" text-anchor="start">ReturnAuthorization</text></g>
+<g id="coverage-ReturnAuthorization-acme"><rect x="230" y="1502" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1521.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-ReturnAuthorization-bigriver"><rect x="500" y="1502" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1521.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-ReturnAuthorization-bobsuncle"><rect x="770" y="1502" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1521.0" class="cell" text-anchor="start">cart ⊂ · 5 props</text>
+</g>
+<g id="coverage-ReturnAuthorization-canonical"><rect x="1040" y="1502" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1521.0" class="cell" text-anchor="start">rma · 9 props</text>
+</g>
+<g id="coverage-row-ReturnLine"><rect x="40" y="1532" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="1551.0" class="row-head" text-anchor="start">ReturnLine</text></g>
+<g id="coverage-ReturnLine-acme"><rect x="230" y="1532" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1551.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-ReturnLine-bigriver"><rect x="500" y="1532" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1551.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-ReturnLine-bobsuncle"><rect x="770" y="1532" width="270" height="30" fill="#fbf1e8" class="grid"/>
+<text x="778.0" y="1551.0" class="cell" text-anchor="start">cart_item ⊂ · 5 props</text>
+</g>
+<g id="coverage-ReturnLine-canonical"><rect x="1040" y="1532" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1551.0" class="cell" text-anchor="start">rma_item · 10 props</text>
+</g>
+<g id="coverage-row-Country"><rect x="40" y="1562" width="190" height="30" fill="#f8f9fa" class="grid"/><text x="48.0" y="1581.0" class="row-head" text-anchor="start">Country</text></g>
+<g id="coverage-Country-acme"><rect x="230" y="1562" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1581.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Country-bigriver"><rect x="500" y="1562" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1581.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Country-bobsuncle"><rect x="770" y="1562" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="778.0" y="1581.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Country-canonical"><rect x="1040" y="1562" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1581.0" class="cell" text-anchor="start">country · 2 props</text>
+</g>
+<g id="coverage-row-Currency"><rect x="40" y="1592" width="190" height="30" fill="#ffffff" class="grid"/><text x="48.0" y="1611.0" class="row-head" text-anchor="start">Currency</text></g>
+<g id="coverage-Currency-acme"><rect x="230" y="1592" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="238.0" y="1611.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Currency-bigriver"><rect x="500" y="1592" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="508.0" y="1611.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Currency-bobsuncle"><rect x="770" y="1592" width="270" height="30" fill="#f1f3f4" class="grid"/>
+<text x="778.0" y="1611.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="coverage-Currency-canonical"><rect x="1040" y="1592" width="270" height="30" fill="#f2eef8" class="grid"/>
+<text x="1048.0" y="1611.0" class="cell" text-anchor="start">currency · 3 props</text>
+</g>
+</g>
+<g id="order-example">
+<text x="1390.0" y="788.0" class="panel-title" text-anchor="start">3. Worked example: how each source supplies the properties of cc:Order</text>
+<text x="1390.0" y="806.0" class="subtitle" text-anchor="start">column or SQL expression [value format]  ·  join → target table  ·  lookup by natural key  ·  code mapping  ·  constant</text>
+<g id="order-head-acme"><rect x="1560" y="818" width="340" height="26" fill="#2e7d4f"/><text x="1730.0" y="835.0" class="cls-name" text-anchor="middle">acme</text></g>
+<g id="order-head-bigriver"><rect x="1900" y="818" width="340" height="26" fill="#2b5f9e"/><text x="2070.0" y="835.0" class="cls-name" text-anchor="middle">bigriver</text></g>
+<g id="order-head-bobsuncle"><rect x="2240" y="818" width="340" height="26" fill="#b5651d"/><text x="2410.0" y="835.0" class="cls-name" text-anchor="middle">bobsuncle</text></g>
+<g id="order-head-canonical"><rect x="2580" y="818" width="340" height="26" fill="#6a4c93"/><text x="2750.0" y="835.0" class="cls-name" text-anchor="middle">canonical</text></g>
+<g id="order-row-closedAt"><rect x="1390" y="844" width="170" height="50" fill="#ffffff" class="grid"/><text x="1398.0" y="860.0" class="row-head" text-anchor="start">cc:closedAt</text><text x="1552.0" y="860.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-closedAt-acme"><rect x="1560" y="844" width="340" height="50" fill="#f1f3f4" class="grid"/>
+<text x="1568.0" y="860.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-closedAt-bigriver"><rect x="1900" y="844" width="340" height="50" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="860.0" class="code-cell" text-anchor="start">CASE WHEN SC_STATE = 'EXPIRED' THEN</text>
+<text x="1908.0" y="872.0" class="code-cell" text-anchor="start">SC_UPDATED_DATE END  [Timestamp UTC</text>
+<text x="1908.0" y="884.0" class="code-cell" text-anchor="start">text]</text>
+</g>
+<g id="order-closedAt-bobsuncle"><rect x="2240" y="844" width="340" height="50" fill="#f1f3f4" class="grid"/>
+<text x="2248.0" y="860.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-closedAt-canonical"><rect x="2580" y="844" width="340" height="50" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="860.0" class="code-cell" text-anchor="start">closed_at  [Timestamp ISO-8601 UTC]</text>
+</g>
+<g id="order-row-createdAt"><rect x="1390" y="894" width="170" height="38" fill="#f8f9fa" class="grid"/><text x="1398.0" y="910.0" class="row-head" text-anchor="start">cc:createdAt</text><text x="1552.0" y="910.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-createdAt-acme"><rect x="1560" y="894" width="340" height="38" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="910.0" class="code-cell" text-anchor="start">OrderDate  [Timestamp UTC text]</text>
+</g>
+<g id="order-createdAt-bigriver"><rect x="1900" y="894" width="340" height="38" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="910.0" class="code-cell" text-anchor="start">SC_CREATED_DATE  [Timestamp UTC text]</text>
+</g>
+<g id="order-createdAt-bobsuncle"><rect x="2240" y="894" width="340" height="38" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="910.0" class="code-cell" text-anchor="start">created_ts  [Timestamp, US/Central</text>
+<text x="2248.0" y="922.0" class="code-cell" text-anchor="start">local]</text>
+</g>
+<g id="order-createdAt-canonical"><rect x="2580" y="894" width="340" height="38" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="910.0" class="code-cell" text-anchor="start">created_at  [Timestamp ISO-8601 UTC]</text>
+</g>
+<g id="order-row-customerEmail"><rect x="1390" y="932" width="170" height="38" fill="#ffffff" class="grid"/><text x="1398.0" y="948.0" class="row-head" text-anchor="start">cc:customerEmail</text><text x="1552.0" y="948.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-customerEmail-acme"><rect x="1560" y="932" width="340" height="38" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="948.0" class="code-cell" text-anchor="start">CustomerEmail  [Email]</text>
+</g>
+<g id="order-customerEmail-bigriver"><rect x="1900" y="932" width="340" height="38" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="948.0" class="code-cell" text-anchor="start">SC_CUSTOMER_EMAIL  [Email]</text>
+</g>
+<g id="order-customerEmail-bobsuncle"><rect x="2240" y="932" width="340" height="38" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="948.0" class="code-cell" text-anchor="start">CASE WHEN cust_ref LIKE '%@%' THEN</text>
+<text x="2248.0" y="960.0" class="code-cell" text-anchor="start">cust_ref END  [Email]</text>
+</g>
+<g id="order-customerEmail-canonical"><rect x="2580" y="932" width="340" height="38" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="948.0" class="code-cell" text-anchor="start">customer_email  [Email]</text>
+</g>
+<g id="order-row-discountTotal"><rect x="1390" y="970" width="170" height="62" fill="#f8f9fa" class="grid"/><text x="1398.0" y="986.0" class="row-head" text-anchor="start">cc:discountTotal</text><text x="1552.0" y="986.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-discountTotal-acme"><rect x="1560" y="970" width="340" height="62" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="986.0" class="code-cell" text-anchor="start">DiscountTotal  [Money, major units]</text>
+</g>
+<g id="order-discountTotal-bigriver"><rect x="1900" y="970" width="340" height="62" fill="#f1f3f4" class="grid"/>
+<text x="1908.0" y="986.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-discountTotal-bobsuncle"><rect x="2240" y="970" width="340" height="62" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="986.0" class="code-cell" text-anchor="start">(SELECT sum(i.disc_cents) FROM cart_item</text>
+<text x="2248.0" y="998.0" class="code-cell" text-anchor="start">i WHERE i.cart_no = cart.cart_no AND</text>
+<text x="2248.0" y="1010.0" class="code-cell" text-anchor="start">i.removed_flg = 'N')  [Money, minor</text>
+<text x="2248.0" y="1022.0" class="code-cell" text-anchor="start">units]</text>
+</g>
+<g id="order-discountTotal-canonical"><rect x="2580" y="970" width="340" height="62" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="986.0" class="code-cell" text-anchor="start">discount_total  [Money, minor units]</text>
+</g>
+<g id="order-row-grandTotal"><rect x="1390" y="1032" width="170" height="26" fill="#ffffff" class="grid"/><text x="1398.0" y="1048.0" class="row-head" text-anchor="start">cc:grandTotal</text><text x="1552.0" y="1048.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-grandTotal-acme"><rect x="1560" y="1032" width="340" height="26" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1048.0" class="code-cell" text-anchor="start">GrandTotal  [Money, major units]</text>
+</g>
+<g id="order-grandTotal-bigriver"><rect x="1900" y="1032" width="340" height="26" fill="#f1f3f4" class="grid"/>
+<text x="1908.0" y="1048.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-grandTotal-bobsuncle"><rect x="2240" y="1032" width="340" height="26" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1048.0" class="code-cell" text-anchor="start">total_cents  [Money, minor units]</text>
+</g>
+<g id="order-grandTotal-canonical"><rect x="2580" y="1032" width="340" height="26" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1048.0" class="code-cell" text-anchor="start">grand_total  [Money, minor units]</text>
+</g>
+<g id="order-row-orderNumber"><rect x="1390" y="1058" width="170" height="26" fill="#f8f9fa" class="grid"/><text x="1398.0" y="1074.0" class="row-head" text-anchor="start">cc:orderNumber</text><text x="1552.0" y="1074.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-orderNumber-acme"><rect x="1560" y="1058" width="340" height="26" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1074.0" class="code-cell" text-anchor="start">OrderNumber  [Text]</text>
+</g>
+<g id="order-orderNumber-bigriver"><rect x="1900" y="1058" width="340" height="26" fill="#f1f3f4" class="grid"/>
+<text x="1908.0" y="1074.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-orderNumber-bobsuncle"><rect x="2240" y="1058" width="340" height="26" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1074.0" class="code-cell" text-anchor="start">cart_no  [Text]</text>
+</g>
+<g id="order-orderNumber-canonical"><rect x="2580" y="1058" width="340" height="26" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1074.0" class="code-cell" text-anchor="start">order_number  [Text]</text>
+</g>
+<g id="order-row-placedAt"><rect x="1390" y="1084" width="170" height="38" fill="#ffffff" class="grid"/><text x="1398.0" y="1100.0" class="row-head" text-anchor="start">cc:placedAt</text><text x="1552.0" y="1100.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-placedAt-acme"><rect x="1560" y="1084" width="340" height="38" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1100.0" class="code-cell" text-anchor="start">OrderDate  [Timestamp UTC text]</text>
+</g>
+<g id="order-placedAt-bigriver"><rect x="1900" y="1084" width="340" height="38" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="1100.0" class="code-cell" text-anchor="start">SC_PURCHASED_DATE  [Timestamp UTC text]</text>
+</g>
+<g id="order-placedAt-bobsuncle"><rect x="2240" y="1084" width="340" height="38" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1100.0" class="code-cell" text-anchor="start">checkout_ts  [Timestamp, US/Central</text>
+<text x="2248.0" y="1112.0" class="code-cell" text-anchor="start">local]</text>
+</g>
+<g id="order-placedAt-canonical"><rect x="2580" y="1084" width="340" height="38" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1100.0" class="code-cell" text-anchor="start">placed_at  [Timestamp ISO-8601 UTC]</text>
+</g>
+<g id="order-row-shippingTotal"><rect x="1390" y="1122" width="170" height="26" fill="#f8f9fa" class="grid"/><text x="1398.0" y="1138.0" class="row-head" text-anchor="start">cc:shippingTotal</text><text x="1552.0" y="1138.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-shippingTotal-acme"><rect x="1560" y="1122" width="340" height="26" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1138.0" class="code-cell" text-anchor="start">ShippingTotal  [Money, major units]</text>
+</g>
+<g id="order-shippingTotal-bigriver"><rect x="1900" y="1122" width="340" height="26" fill="#f1f3f4" class="grid"/>
+<text x="1908.0" y="1138.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-shippingTotal-bobsuncle"><rect x="2240" y="1122" width="340" height="26" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1138.0" class="code-cell" text-anchor="start">ship_cents  [Money, minor units]</text>
+</g>
+<g id="order-shippingTotal-canonical"><rect x="2580" y="1122" width="340" height="26" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1138.0" class="code-cell" text-anchor="start">shipping_total  [Money, minor units]</text>
+</g>
+<g id="order-row-subtotalAmount"><rect x="1390" y="1148" width="170" height="62" fill="#ffffff" class="grid"/><text x="1398.0" y="1164.0" class="row-head" text-anchor="start">cc:subtotalAmount</text><text x="1552.0" y="1164.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-subtotalAmount-acme"><rect x="1560" y="1148" width="340" height="62" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1164.0" class="code-cell" text-anchor="start">SubTotal  [Money, major units]</text>
+</g>
+<g id="order-subtotalAmount-bigriver"><rect x="1900" y="1148" width="340" height="62" fill="#f1f3f4" class="grid"/>
+<text x="1908.0" y="1164.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-subtotalAmount-bobsuncle"><rect x="2240" y="1148" width="340" height="62" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1164.0" class="code-cell" text-anchor="start">(SELECT sum(i.qty * i.unit_price_cents)</text>
+<text x="2248.0" y="1176.0" class="code-cell" text-anchor="start">FROM cart_item i WHERE i.cart_no =</text>
+<text x="2248.0" y="1188.0" class="code-cell" text-anchor="start">cart.cart_no AND i.removed_flg = 'N') </text>
+<text x="2248.0" y="1200.0" class="code-cell" text-anchor="start">[Money, minor units]</text>
+</g>
+<g id="order-subtotalAmount-canonical"><rect x="2580" y="1148" width="340" height="62" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1164.0" class="code-cell" text-anchor="start">subtotal_amount  [Money, minor units]</text>
+</g>
+<g id="order-row-taxTotal"><rect x="1390" y="1210" width="170" height="26" fill="#f8f9fa" class="grid"/><text x="1398.0" y="1226.0" class="row-head" text-anchor="start">cc:taxTotal</text><text x="1552.0" y="1226.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-taxTotal-acme"><rect x="1560" y="1210" width="340" height="26" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1226.0" class="code-cell" text-anchor="start">TaxTotal  [Money, major units]</text>
+</g>
+<g id="order-taxTotal-bigriver"><rect x="1900" y="1210" width="340" height="26" fill="#f1f3f4" class="grid"/>
+<text x="1908.0" y="1226.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-taxTotal-bobsuncle"><rect x="2240" y="1210" width="340" height="26" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1226.0" class="code-cell" text-anchor="start">tax_cents  [Money, minor units]</text>
+</g>
+<g id="order-taxTotal-canonical"><rect x="2580" y="1210" width="340" height="26" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1226.0" class="code-cell" text-anchor="start">tax_total  [Money, minor units]</text>
+</g>
+<g id="order-row-updatedAt"><rect x="1390" y="1236" width="170" height="26" fill="#ffffff" class="grid"/><text x="1398.0" y="1252.0" class="row-head" text-anchor="start">cc:updatedAt</text><text x="1552.0" y="1252.0" class="kind" text-anchor="end">attribute</text></g>
+<g id="order-updatedAt-acme"><rect x="1560" y="1236" width="340" height="26" fill="#f1f3f4" class="grid"/>
+<text x="1568.0" y="1252.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-updatedAt-bigriver"><rect x="1900" y="1236" width="340" height="26" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="1252.0" class="code-cell" text-anchor="start">SC_UPDATED_DATE  [Timestamp UTC text]</text>
+</g>
+<g id="order-updatedAt-bobsuncle"><rect x="2240" y="1236" width="340" height="26" fill="#f1f3f4" class="grid"/>
+<text x="2248.0" y="1252.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-updatedAt-canonical"><rect x="2580" y="1236" width="340" height="26" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1252.0" class="code-cell" text-anchor="start">updated_at  [Timestamp ISO-8601 UTC]</text>
+</g>
+<g id="order-row-billingAddress"><rect x="1390" y="1262" width="170" height="38" fill="#f8f9fa" class="grid"/><text x="1398.0" y="1278.0" class="row-head" text-anchor="start">cc:billingAddress</text><text x="1552.0" y="1278.0" class="kind" text-anchor="end">relation</text></g>
+<g id="order-billingAddress-acme"><rect x="1560" y="1262" width="340" height="38" fill="#f1f3f4" class="grid"/>
+<text x="1568.0" y="1278.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-billingAddress-bigriver"><rect x="1900" y="1262" width="340" height="38" fill="#f1f3f4" class="grid"/>
+<text x="1908.0" y="1278.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-billingAddress-bobsuncle"><rect x="2240" y="1262" width="340" height="38" fill="#f1f3f4" class="grid"/>
+<text x="2248.0" y="1278.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-billingAddress-canonical"><rect x="2580" y="1262" width="340" height="38" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1278.0" class="code-cell" text-anchor="start">→ Address via order_address where</text>
+<text x="2588.0" y="1290.0" class="code-cell" text-anchor="start">address_type = 'BILLING'</text>
+</g>
+<g id="order-row-hasCurrency"><rect x="1390" y="1300" width="170" height="26" fill="#ffffff" class="grid"/><text x="1398.0" y="1316.0" class="row-head" text-anchor="start">cc:hasCurrency</text><text x="1552.0" y="1316.0" class="kind" text-anchor="end">relation</text></g>
+<g id="order-hasCurrency-acme"><rect x="1560" y="1300" width="340" height="26" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1316.0" class="code-cell" text-anchor="start">CurrencyCode → lookup by currencyCode</text>
+</g>
+<g id="order-hasCurrency-bigriver"><rect x="1900" y="1300" width="340" height="26" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="1316.0" class="code-cell" text-anchor="start">SC_DISPLAY_CCY → lookup by currencyCode</text>
+</g>
+<g id="order-hasCurrency-bobsuncle"><rect x="2240" y="1300" width="340" height="26" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1316.0" class="code-cell" text-anchor="start">constant USD</text>
+</g>
+<g id="order-hasCurrency-canonical"><rect x="2580" y="1300" width="340" height="26" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1316.0" class="code-cell" text-anchor="start">currency_code → lookup by currencyCode</text>
+</g>
+<g id="order-row-placedBy"><rect x="1390" y="1326" width="170" height="26" fill="#f8f9fa" class="grid"/><text x="1398.0" y="1342.0" class="row-head" text-anchor="start">cc:placedBy</text><text x="1552.0" y="1342.0" class="kind" text-anchor="end">relation</text></g>
+<g id="order-placedBy-acme"><rect x="1560" y="1326" width="340" height="26" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1342.0" class="code-cell" text-anchor="start">CustomerId → Customer (Order)</text>
+</g>
+<g id="order-placedBy-bigriver"><rect x="1900" y="1326" width="340" height="26" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="1342.0" class="code-cell" text-anchor="start">SC_ACCOUNT_ID → Customer (SHOPPING_CART)</text>
+</g>
+<g id="order-placedBy-bobsuncle"><rect x="2240" y="1326" width="340" height="26" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1342.0" class="code-cell" text-anchor="start">cust_ref → Customer (cart)</text>
+</g>
+<g id="order-placedBy-canonical"><rect x="2580" y="1326" width="340" height="26" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1342.0" class="code-cell" text-anchor="start">customer_id → Customer (customer)</text>
+</g>
+<g id="order-row-shippingAddress"><rect x="1390" y="1352" width="170" height="38" fill="#ffffff" class="grid"/><text x="1398.0" y="1368.0" class="row-head" text-anchor="start">cc:shippingAddress</text><text x="1552.0" y="1368.0" class="kind" text-anchor="end">relation</text></g>
+<g id="order-shippingAddress-acme"><rect x="1560" y="1352" width="340" height="38" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1368.0" class="code-cell" text-anchor="start">OrderId → Address (Order)</text>
+</g>
+<g id="order-shippingAddress-bigriver"><rect x="1900" y="1352" width="340" height="38" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="1368.0" class="code-cell" text-anchor="start">SC_UUID → Address (SHOPPING_CART)</text>
+</g>
+<g id="order-shippingAddress-bobsuncle"><rect x="2240" y="1352" width="340" height="38" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1368.0" class="code-cell" text-anchor="start">cart_no → Address (cart)</text>
+</g>
+<g id="order-shippingAddress-canonical"><rect x="2580" y="1352" width="340" height="38" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1368.0" class="code-cell" text-anchor="start">→ Address via order_address where</text>
+<text x="2588.0" y="1380.0" class="code-cell" text-anchor="start">address_type = 'SHIPPING'</text>
+</g>
+<g id="order-row-deviceType"><rect x="1390" y="1390" width="170" height="26" fill="#f8f9fa" class="grid"/><text x="1398.0" y="1406.0" class="row-head" text-anchor="start">cc:deviceType</text><text x="1552.0" y="1406.0" class="kind" text-anchor="end">code</text></g>
+<g id="order-deviceType-acme"><rect x="1560" y="1390" width="340" height="26" fill="#f1f3f4" class="grid"/>
+<text x="1568.0" y="1406.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-deviceType-bigriver"><rect x="1900" y="1390" width="340" height="26" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="1406.0" class="code-cell" text-anchor="start">SC_DEVICE → code (same codes)</text>
+</g>
+<g id="order-deviceType-bobsuncle"><rect x="2240" y="1390" width="340" height="26" fill="#f1f3f4" class="grid"/>
+<text x="2248.0" y="1406.0" class="cell-empty" text-anchor="start">—</text>
+</g>
+<g id="order-deviceType-canonical"><rect x="2580" y="1390" width="340" height="26" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1406.0" class="code-cell" text-anchor="start">device_type → code (same codes)</text>
+</g>
+<g id="order-row-orderStatus"><rect x="1390" y="1416" width="170" height="26" fill="#ffffff" class="grid"/><text x="1398.0" y="1432.0" class="row-head" text-anchor="start">cc:orderStatus</text><text x="1552.0" y="1432.0" class="kind" text-anchor="end">code</text></g>
+<g id="order-orderStatus-acme"><rect x="1560" y="1416" width="340" height="26" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1432.0" class="code-cell" text-anchor="start">OrderStatus → code (5 mapped values)</text>
+</g>
+<g id="order-orderStatus-bigriver"><rect x="1900" y="1416" width="340" height="26" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="1432.0" class="code-cell" text-anchor="start">SC_STATE → code (4 mapped values)</text>
+</g>
+<g id="order-orderStatus-bobsuncle"><rect x="2240" y="1416" width="340" height="26" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1432.0" class="code-cell" text-anchor="start">cart_stat → code (4 mapped values)</text>
+</g>
+<g id="order-orderStatus-canonical"><rect x="2580" y="1416" width="340" height="26" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1432.0" class="code-cell" text-anchor="start">order_status → code (same codes)</text>
+</g>
+<g id="order-row-salesChannel"><rect x="1390" y="1442" width="170" height="26" fill="#f8f9fa" class="grid"/><text x="1398.0" y="1458.0" class="row-head" text-anchor="start">cc:salesChannel</text><text x="1552.0" y="1458.0" class="kind" text-anchor="end">code</text></g>
+<g id="order-salesChannel-acme"><rect x="1560" y="1442" width="340" height="26" fill="#eef6f1" class="grid"/>
+<text x="1568.0" y="1458.0" class="code-cell" text-anchor="start">always WEB</text>
+</g>
+<g id="order-salesChannel-bigriver"><rect x="1900" y="1442" width="340" height="26" fill="#edf2f9" class="grid"/>
+<text x="1908.0" y="1458.0" class="code-cell" text-anchor="start">SC_DEVICE → code (4 mapped values)</text>
+</g>
+<g id="order-salesChannel-bobsuncle"><rect x="2240" y="1442" width="340" height="26" fill="#fbf1e8" class="grid"/>
+<text x="2248.0" y="1458.0" class="code-cell" text-anchor="start">channel_cd → code (same codes)</text>
+</g>
+<g id="order-salesChannel-canonical"><rect x="2580" y="1442" width="340" height="26" fill="#f2eef8" class="grid"/>
+<text x="2588.0" y="1458.0" class="code-cell" text-anchor="start">channel → code (same codes)</text>
+</g>
+</g>
+</svg>

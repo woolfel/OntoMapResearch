@@ -1,0 +1,2466 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix cc: <https://ontoresearch.example/commerce/core#> .
+
+
+<https://ontoresearch.example/commerce/core>
+    a owl:Ontology ;
+    owl:versionIRI <https://ontoresearch.example/commerce/core/1.0.0> ;
+    owl:versionInfo "1.0.0" ;
+    dcterms:title "Commerce core ontology"@en ;
+    dcterms:description "Store-independent concepts of online and in-store commerce: catalog, sellers, offers, inventory, customers, orders and carts, promotions, payments, shipments and returns. It has no knowledge of any database; commerce_binding.ttl maps these concepts to the tables and columns of specific stores."@en ;
+    rdfs:comment "* money       xsd:decimal in MAJOR currency units (19.99), with the\n                currency given by cc:hasCurrency on the same resource\n  * percentages xsd:decimal fraction 0..1 (0.15 = 15%)\n  * timestamps  xsd:dateTime in UTC\n  * dates       xsd:date\n  * weight      grams (property names carry the unit)\n  * flags       xsd:boolean\n  * codes       individuals of a code-list class; skos:notation holds\n                the canonical code (e.g. 'PLACED')"@en .
+
+
+# ---- annotation properties ----
+
+cc:valueConvention
+    a owl:AnnotationProperty ;
+    rdfs:label "value convention"@en ;
+    skos:definition "The unit or representation every value of this property uses, whatever the source. Bindings convert into it."@en .
+
+
+# ---- classes ----
+
+cc:Country
+    a owl:Class ;
+    rdfs:label "Country"@en ;
+    skos:definition "A country, identified by its ISO 3166-1 alpha-2 code."@en ;
+    owl:hasKey ( cc:countryCode ) .
+
+cc:Currency
+    a owl:Class ;
+    rdfs:label "Currency"@en ;
+    skos:definition "A currency, identified by its ISO 4217 code."@en ;
+    skos:altLabel "CCY"@en ;
+    owl:hasKey ( cc:currencyCode ) .
+
+cc:Category
+    a owl:Class ;
+    rdfs:label "Category"@en ;
+    skos:definition "A node in the merchandising hierarchy used to browse and group products (Garden > Watering & Irrigation)."@en ;
+    skos:altLabel "CatalogCategory"@en ;
+    skos:altLabel "department"@en ;
+    skos:altLabel "dept"@en ;
+    skos:altLabel "browse path"@en .
+
+cc:Manufacturer
+    a owl:Class ;
+    rdfs:label "Manufacturer"@en ;
+    skos:definition "The legal company that makes products and stands behind their manufacturer warranty."@en ;
+    skos:altLabel "mfr"@en ;
+    skos:altLabel "maker"@en .
+
+cc:Brand
+    a owl:Class ;
+    rdfs:label "Brand"@en ;
+    skos:definition "The consumer-facing name a product is sold under. A manufacturer can own several brands."@en ;
+    skos:altLabel "brand text"@en ;
+    skos:altLabel "make"@en .
+
+cc:ProductModel
+    a owl:Class ;
+    rdfs:label "Product model"@en ;
+    skos:definition "A manufacturer's model: the design identified by a model or part number. Several sellable products (color or pack-size variants) can share one model."@en ;
+    skos:altLabel "model"@en ;
+    skos:altLabel "part number"@en ;
+    skos:altLabel "mfr part no"@en .
+
+cc:Product
+    a owl:Class ;
+    rdfs:label "Product"@en ;
+    skos:definition "A sellable item (one SKU). Seller-independent: what a specific seller charges for it is an Offer."@en ;
+    skos:altLabel "Model (AcmeShopping)"@en ;
+    skos:altLabel "SKU"@en ;
+    skos:altLabel "listing"@en .
+
+cc:ProductAttribute
+    a owl:Class ;
+    rdfs:label "Product attribute"@en ;
+    skos:definition "A named characteristic of a product that is not a fixed property, e.g. color=black or screen_size=65 in."@en ;
+    skos:altLabel "tag"@en ;
+    skos:altLabel "product tag"@en ;
+    skos:altLabel "EAV attribute"@en .
+
+cc:WarrantyPlan
+    a owl:Class ;
+    rdfs:label "Warranty plan"@en ;
+    skos:definition "Terms under which a product is repaired or replaced, either included by the manufacturer or sold as an extended plan."@en ;
+    skos:altLabel "warranty"@en ;
+    skos:altLabel "protection plan"@en .
+
+cc:Seller
+    a owl:Class ;
+    rdfs:label "Seller"@en ;
+    skos:definition "A party that sells products: the platform itself (first party) or a third-party store on a marketplace."@en ;
+    skos:altLabel "store"@en ;
+    skos:altLabel "merchant"@en ;
+    skos:altLabel "vendor"@en .
+
+cc:Offer
+    a owl:Class ;
+    rdfs:label "Offer"@en ;
+    skos:definition "A seller's price for a product, in a currency, for a period of time."@en ;
+    skos:altLabel "listing price"@en ;
+    skos:altLabel "retail price"@en ;
+    skos:altLabel "offer price"@en .
+
+cc:Warehouse
+    a owl:Class ;
+    rdfs:label "Warehouse"@en ;
+    skos:definition "A location that holds stock: a distribution center or a store."@en ;
+    skos:altLabel "whse"@en ;
+    skos:altLabel "location"@en ;
+    skos:altLabel "fulfillment center"@en .
+
+cc:InventoryPosition
+    a owl:Class ;
+    rdfs:label "Inventory position"@en ;
+    skos:definition "How much of one product is held at one warehouse."@en ;
+    skos:altLabel "inventory"@en ;
+    skos:altLabel "stock level"@en .
+
+cc:Customer
+    a owl:Class ;
+    rdfs:label "Customer"@en ;
+    skos:definition "A registered shopper with an account and profile."@en ;
+    skos:altLabel "account"@en ;
+    skos:altLabel "cust_ref"@en ;
+    skos:altLabel "shopper"@en .
+
+cc:Address
+    a owl:Class ;
+    rdfs:label "Address"@en ;
+    skos:definition "A postal address. Sources often hold only part of it, e.g. a postal code or region."@en ;
+    skos:altLabel "ship to"@en ;
+    skos:altLabel "ship zip"@en ;
+    skos:altLabel "ship region"@en .
+
+cc:Order
+    a owl:Class ;
+    rdfs:label "Order"@en ;
+    skos:definition "A purchase from start to finish. A cart is an order that has not been placed yet; the order status says where it is in its life."@en ;
+    skos:altLabel "cart"@en ;
+    skos:altLabel "shopping cart"@en ;
+    skos:altLabel "basket"@en ;
+    skos:altLabel "checkout"@en .
+
+cc:OrderLine
+    a owl:Class ;
+    rdfs:label "Order line"@en ;
+    skos:definition "One product, from one seller, in an order or cart."@en ;
+    skos:altLabel "order item"@en ;
+    skos:altLabel "cart item"@en ;
+    skos:altLabel "line item"@en ;
+    skos:altLabel "ITEM"@en .
+
+cc:Promotion
+    a owl:Class ;
+    rdfs:label "Promotion"@en ;
+    skos:definition "A rule that reduces price: a coupon code, an automatic deal or an event sale."@en ;
+    skos:altLabel "promo"@en ;
+    skos:altLabel "coupon"@en ;
+    skos:altLabel "deal"@en ;
+    skos:altLabel "discount rule"@en .
+
+cc:AppliedDiscount
+    a owl:Class ;
+    rdfs:label "Applied discount"@en ;
+    skos:definition "A discount actually granted on an order or order line, with or without a promotion behind it."@en ;
+    skos:altLabel "discount"@en ;
+    skos:altLabel "savings"@en ;
+    skos:altLabel "disc"@en .
+
+cc:Payment
+    a owl:Class ;
+    rdfs:label "Payment"@en ;
+    skos:definition "Money collected for an order."@en ;
+    skos:altLabel "tender"@en ;
+    skos:altLabel "charge"@en .
+
+cc:Shipment
+    a owl:Class ;
+    rdfs:label "Shipment"@en ;
+    skos:definition "A package sent for an order from one seller or warehouse."@en ;
+    skos:altLabel "parcel"@en ;
+    skos:altLabel "package"@en ;
+    skos:altLabel "fulfillment"@en .
+
+cc:ShipmentLine
+    a owl:Class ;
+    rdfs:label "Shipment line"@en ;
+    skos:definition "How many units of an order line a shipment holds."@en .
+
+cc:ReturnAuthorization
+    a owl:Class ;
+    rdfs:label "Return authorization"@en ;
+    skos:definition "Approval for a customer to send items back (RMA)."@en ;
+    skos:altLabel "RMA"@en ;
+    skos:altLabel "return"@en .
+
+cc:ReturnLine
+    a owl:Class ;
+    rdfs:label "Return line"@en ;
+    skos:definition "Units of one product coming back under a return."@en ;
+    skos:altLabel "return item"@en ;
+    skos:altLabel "negative quantity line"@en .
+
+cc:Refund
+    a owl:Class ;
+    rdfs:label "Refund"@en ;
+    skos:definition "Money paid back to a customer."@en .
+
+cc:CodeList
+    a owl:Class ;
+    rdfs:label "Code list"@en ;
+    skos:definition "Superclass of all controlled vocabularies. Each member has a skos:notation holding its canonical code."@en .
+
+cc:OrderStatus
+    a owl:Class ;
+    rdfs:label "Order status"@en ;
+    skos:definition "Where an order is in its life."@en ;
+    skos:altLabel "cart state"@en ;
+    skos:altLabel "cart_stat"@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:SalesChannel
+    a owl:Class ;
+    rdfs:label "Sales channel"@en ;
+    skos:definition "How the order was placed."@en ;
+    skos:altLabel "channel"@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:DeviceType
+    a owl:Class ;
+    rdfs:label "Device type"@en ;
+    skos:definition "The device the shopper used."@en ;
+    skos:altLabel "device"@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:SellerStatus
+    a owl:Class ;
+    rdfs:label "Seller status"@en ;
+    skos:definition "Whether a seller may sell."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:ItemCondition
+    a owl:Class ;
+    rdfs:label "Item condition"@en ;
+    skos:definition "Condition of the item being offered."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:PromotionScope
+    a owl:Class ;
+    rdfs:label "Promotion scope"@en ;
+    skos:definition "The level a promotion discounts at."@en ;
+    skos:altLabel "promotion type"@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:FundingSource
+    a owl:Class ;
+    rdfs:label "Funding source"@en ;
+    skos:definition "Who pays for a promotion."@en ;
+    skos:altLabel "funded by"@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:AttributeSource
+    a owl:Class ;
+    rdfs:label "Attribute source"@en ;
+    skos:definition "Who supplied a product attribute."@en ;
+    skos:altLabel "tag source"@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:WarrantyType
+    a owl:Class ;
+    rdfs:label "Warranty type"@en ;
+    skos:definition "Kind of warranty."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:CustomerStatus
+    a owl:Class ;
+    rdfs:label "Customer status"@en ;
+    skos:definition "Whether a customer account is usable."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:PaymentMethod
+    a owl:Class ;
+    rdfs:label "Payment method"@en ;
+    skos:definition "How a payment was made."@en ;
+    skos:altLabel "tender type"@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:PaymentStatus
+    a owl:Class ;
+    rdfs:label "Payment status"@en ;
+    skos:definition "Where a payment is in its life."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:ShipmentStatus
+    a owl:Class ;
+    rdfs:label "Shipment status"@en ;
+    skos:definition "Where a shipment is in its life."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:ReturnStatus
+    a owl:Class ;
+    rdfs:label "Return status"@en ;
+    skos:definition "Where a return authorization is in its life."@en ;
+    skos:altLabel "RMA status"@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:ReturnReason
+    a owl:Class ;
+    rdfs:label "Return reason"@en ;
+    skos:definition "Why items came back."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:ReturnResolution
+    a owl:Class ;
+    rdfs:label "Return resolution"@en ;
+    skos:definition "What the customer gets for a return."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:ReturnedCondition
+    a owl:Class ;
+    rdfs:label "Returned condition"@en ;
+    skos:definition "Condition a returned item arrived in."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:Disposition
+    a owl:Class ;
+    rdfs:label "Disposition"@en ;
+    skos:definition "What happens to a returned item."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+cc:RefundStatus
+    a owl:Class ;
+    rdfs:label "Refund status"@en ;
+    skos:definition "Where a refund is in its life."@en ;
+    rdfs:subClassOf cc:CodeList .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( cc:Category cc:Manufacturer cc:Brand cc:ProductModel cc:Product cc:ProductAttribute cc:WarrantyPlan cc:Seller cc:Offer cc:Warehouse cc:InventoryPosition cc:Customer cc:Address cc:Order cc:OrderLine cc:Promotion cc:AppliedDiscount cc:Payment cc:Shipment cc:ShipmentLine cc:ReturnAuthorization cc:ReturnLine cc:Refund cc:Country cc:Currency cc:CodeList ) .
+
+
+# ---- defined classes (classify orders by status) ----
+
+cc:Cart
+    a owl:Class ;
+    rdfs:label "Cart"@en ;
+    skos:definition "An order that has not been placed (still shopping, saved, abandoned or expired)."@en ;
+    rdfs:subClassOf cc:Order ;
+    owl:equivalentClass [ a owl:Class ; owl:intersectionOf ( cc:Order [ a owl:Restriction ; owl:onProperty cc:orderStatus ; owl:someValuesFrom [ a owl:Class ; owl:oneOf ( cc:OrderStatus_CART cc:OrderStatus_SAVED_FOR_LATER cc:OrderStatus_ABANDONED cc:OrderStatus_EXPIRED ) ] ] ) ] .
+
+cc:PlacedOrder
+    a owl:Class ;
+    rdfs:label "Placed order"@en ;
+    skos:definition "An order the customer has checked out."@en ;
+    rdfs:subClassOf cc:Order ;
+    owl:equivalentClass [ a owl:Class ; owl:intersectionOf ( cc:Order [ a owl:Restriction ; owl:onProperty cc:orderStatus ; owl:someValuesFrom [ a owl:Class ; owl:oneOf ( cc:OrderStatus_PLACED cc:OrderStatus_PAID cc:OrderStatus_PARTIALLY_SHIPPED cc:OrderStatus_SHIPPED cc:OrderStatus_DELIVERED cc:OrderStatus_PARTIALLY_RETURNED cc:OrderStatus_RETURNED ) ] ] ) ] .
+
+
+# ---- object properties ----
+
+cc:hasCurrency
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "has currency"@en ;
+    skos:definition "Currency of the monetary amounts on this resource."@en ;
+    rdfs:range cc:Currency .
+
+cc:countryOfOrigin
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "country of origin"@en ;
+    skos:definition "Where the product or brand comes from."@en ;
+    rdfs:range cc:Country .
+
+cc:parentCategory
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "parent category"@en ;
+    skos:definition "The broader category this one sits under."@en ;
+    rdfs:domain cc:Category ;
+    rdfs:range cc:Category .
+
+cc:ownedBy
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "owned by"@en ;
+    skos:definition "The manufacturer that owns the brand."@en ;
+    rdfs:domain cc:Brand ;
+    rdfs:range cc:Manufacturer .
+
+cc:headquartersCountry
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "headquarters country"@en ;
+    rdfs:domain cc:Manufacturer ;
+    rdfs:range cc:Country .
+
+cc:ofBrand
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "of brand"@en ;
+    skos:definition "Brand the model is sold under."@en ;
+    rdfs:domain cc:ProductModel ;
+    rdfs:range cc:Brand .
+
+cc:hasModel
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "has model"@en ;
+    skos:definition "Manufacturer model of the product."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range cc:ProductModel .
+
+cc:hasBrand
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "has brand"@en ;
+    skos:definition "Brand of the product. Usually the brand of its model; stated directly when the model is unknown."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range cc:Brand .
+
+cc:inCategory
+    a owl:ObjectProperty ;
+    rdfs:label "in category"@en ;
+    skos:definition "Merchandising category."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range cc:Category .
+
+cc:hasAttribute
+    a owl:ObjectProperty ;
+    rdfs:label "has attribute"@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range cc:ProductAttribute ;
+    owl:inverseOf cc:attributeOf .
+
+cc:attributeOf
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "attribute of"@en ;
+    rdfs:domain cc:ProductAttribute ;
+    rdfs:range cc:Product ;
+    owl:inverseOf cc:hasAttribute .
+
+cc:attributeSource
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "attribute source"@en ;
+    rdfs:domain cc:ProductAttribute ;
+    rdfs:range cc:AttributeSource .
+
+cc:hasWarranty
+    a owl:ObjectProperty ;
+    rdfs:label "has warranty"@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range cc:WarrantyPlan .
+
+cc:warrantyType
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "warranty type"@en ;
+    rdfs:domain cc:WarrantyPlan ;
+    rdfs:range cc:WarrantyType .
+
+cc:warrantyProduct
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "warranty product"@en ;
+    skos:definition "The product sold to buy this plan, for extended warranties."@en ;
+    rdfs:domain cc:WarrantyPlan ;
+    rdfs:range cc:Product .
+
+cc:sellerCountry
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "seller country"@en ;
+    rdfs:domain cc:Seller ;
+    rdfs:range cc:Country .
+
+cc:defaultCurrency
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "default currency"@en ;
+    rdfs:domain cc:Seller ;
+    rdfs:range cc:Currency .
+
+cc:sellerStatus
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "seller status"@en ;
+    rdfs:domain cc:Seller ;
+    rdfs:range cc:SellerStatus .
+
+cc:offeredBy
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "offered by"@en ;
+    rdfs:domain cc:Offer ;
+    rdfs:range cc:Seller .
+
+cc:offerFor
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "offer for"@en ;
+    rdfs:domain cc:Offer ;
+    rdfs:range cc:Product .
+
+cc:itemCondition
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "item condition"@en ;
+    rdfs:domain cc:Offer ;
+    rdfs:range cc:ItemCondition .
+
+cc:operatedBy
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "operated by"@en ;
+    rdfs:domain cc:Warehouse ;
+    rdfs:range cc:Seller .
+
+cc:hasAddress
+    a owl:ObjectProperty ;
+    rdfs:label "has address"@en ;
+    skos:definition "A postal address of the resource."@en ;
+    rdfs:range cc:Address .
+
+cc:stockOf
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "stock of"@en ;
+    rdfs:domain cc:InventoryPosition ;
+    rdfs:range cc:Product .
+
+cc:heldAt
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "held at"@en ;
+    rdfs:domain cc:InventoryPosition ;
+    rdfs:range cc:Warehouse .
+
+cc:addressCountry
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "address country"@en ;
+    rdfs:domain cc:Address ;
+    rdfs:range cc:Country .
+
+cc:preferredCurrency
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "preferred currency"@en ;
+    rdfs:domain cc:Customer ;
+    rdfs:range cc:Currency .
+
+cc:customerStatus
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "customer status"@en ;
+    rdfs:domain cc:Customer ;
+    rdfs:range cc:CustomerStatus .
+
+cc:defaultBillingAddress
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "default billing address"@en ;
+    rdfs:domain cc:Customer ;
+    rdfs:range cc:Address .
+
+cc:defaultShippingAddress
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "default shipping address"@en ;
+    rdfs:domain cc:Customer ;
+    rdfs:range cc:Address .
+
+cc:placedBy
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "placed by"@en ;
+    skos:definition "Registered customer; absent for guests."@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range cc:Customer .
+
+cc:orderStatus
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "order status"@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range cc:OrderStatus .
+
+cc:salesChannel
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "sales channel"@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range cc:SalesChannel .
+
+cc:deviceType
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "device type"@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range cc:DeviceType .
+
+cc:billingAddress
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "billing address"@en ;
+    skos:definition "Address used for billing (order or payment)."@en ;
+    rdfs:range cc:Address .
+
+cc:shippingAddress
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "shipping address"@en ;
+    skos:definition "Where the order ships. May be partial, e.g. postal code only."@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range cc:Address .
+
+cc:hasLine
+    a owl:ObjectProperty ;
+    rdfs:label "has line"@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range cc:OrderLine ;
+    owl:inverseOf cc:lineOf .
+
+cc:lineOf
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "line of"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range cc:Order ;
+    owl:inverseOf cc:hasLine .
+
+cc:ofProduct
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "of product"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range cc:Product .
+
+cc:soldBy
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "sold by"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range cc:Seller .
+
+cc:fromOffer
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "from offer"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range cc:Offer .
+
+cc:fulfilledFrom
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "fulfilled from"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range cc:Warehouse .
+
+cc:addOnFor
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "add-on for"@en ;
+    skos:definition "The line this add-on (e.g. a protection plan) was sold with."@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range cc:OrderLine .
+
+cc:originalCurrency
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "original currency"@en ;
+    skos:definition "Seller's currency when it differs from the order currency."@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range cc:Currency .
+
+cc:promotionScope
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "promotion scope"@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range cc:PromotionScope .
+
+cc:fundedBy
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "funded by"@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range cc:FundingSource .
+
+cc:fundingSeller
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "funding seller"@en ;
+    skos:definition "Seller paying for the promotion."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range cc:Seller .
+
+cc:fundingBrand
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "funding brand"@en ;
+    skos:definition "Brand whose manufacturer pays."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range cc:Brand .
+
+cc:appliesToProduct
+    a owl:ObjectProperty ;
+    rdfs:label "applies to product"@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range cc:Product .
+
+cc:appliesToModel
+    a owl:ObjectProperty ;
+    rdfs:label "applies to model"@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range cc:ProductModel .
+
+cc:appliesToBrand
+    a owl:ObjectProperty ;
+    rdfs:label "applies to brand"@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range cc:Brand .
+
+cc:appliesToCategory
+    a owl:ObjectProperty ;
+    rdfs:label "applies to category"@en ;
+    skos:definition "Includes sub-categories."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range cc:Category .
+
+cc:fromPromotion
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "from promotion"@en ;
+    skos:definition "Absent for manual discounts."@en ;
+    rdfs:domain cc:AppliedDiscount ;
+    rdfs:range cc:Promotion .
+
+cc:appliedToOrder
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "applied to order"@en ;
+    rdfs:domain cc:AppliedDiscount ;
+    rdfs:range cc:Order .
+
+cc:appliedToLine
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "applied to line"@en ;
+    skos:definition "Absent for order-level discounts."@en ;
+    rdfs:domain cc:AppliedDiscount ;
+    rdfs:range cc:OrderLine .
+
+cc:paysFor
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "pays for"@en ;
+    rdfs:domain cc:Payment ;
+    rdfs:range cc:Order .
+
+cc:paymentMethod
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "payment method"@en ;
+    rdfs:domain cc:Payment ;
+    rdfs:range cc:PaymentMethod .
+
+cc:paymentStatus
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "payment status"@en ;
+    rdfs:domain cc:Payment ;
+    rdfs:range cc:PaymentStatus .
+
+cc:shipmentOf
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "shipment of"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range cc:Order .
+
+cc:shippedBy
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "shipped by"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range cc:Seller .
+
+cc:shippedFrom
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "shipped from"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range cc:Warehouse .
+
+cc:shipTo
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "ship to"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range cc:Address .
+
+cc:shipmentStatus
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "shipment status"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range cc:ShipmentStatus .
+
+cc:inShipment
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "in shipment"@en ;
+    rdfs:domain cc:ShipmentLine ;
+    rdfs:range cc:Shipment .
+
+cc:shipsLine
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "ships line"@en ;
+    rdfs:domain cc:ShipmentLine ;
+    rdfs:range cc:OrderLine .
+
+cc:returnFor
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "return for"@en ;
+    skos:definition "Original order, when known."@en ;
+    rdfs:domain cc:ReturnAuthorization ;
+    rdfs:range cc:Order .
+
+cc:requestedBy
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "requested by"@en ;
+    rdfs:domain cc:ReturnAuthorization ;
+    rdfs:range cc:Customer .
+
+cc:returnStatus
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "return status"@en ;
+    rdfs:domain cc:ReturnAuthorization ;
+    rdfs:range cc:ReturnStatus .
+
+cc:returnTo
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "return to"@en ;
+    rdfs:domain cc:ReturnAuthorization ;
+    rdfs:range cc:Warehouse .
+
+cc:inReturn
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "in return"@en ;
+    rdfs:domain cc:ReturnLine ;
+    rdfs:range cc:ReturnAuthorization .
+
+cc:returnsLine
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "returns line"@en ;
+    skos:definition "Original order line, when known."@en ;
+    rdfs:domain cc:ReturnLine ;
+    rdfs:range cc:OrderLine .
+
+cc:returnedProduct
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "returned product"@en ;
+    rdfs:domain cc:ReturnLine ;
+    rdfs:range cc:Product .
+
+cc:returnReason
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "return reason"@en ;
+    rdfs:domain cc:ReturnLine ;
+    rdfs:range cc:ReturnReason .
+
+cc:requestedResolution
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "requested resolution"@en ;
+    rdfs:domain cc:ReturnLine ;
+    rdfs:range cc:ReturnResolution .
+
+cc:receivedCondition
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "received condition"@en ;
+    rdfs:domain cc:ReturnLine ;
+    rdfs:range cc:ReturnedCondition .
+
+cc:disposition
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "disposition"@en ;
+    rdfs:domain cc:ReturnLine ;
+    rdfs:range cc:Disposition .
+
+cc:replacementOrder
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "replacement order"@en ;
+    rdfs:domain cc:ReturnLine ;
+    rdfs:range cc:Order .
+
+cc:refundFor
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "refund for"@en ;
+    rdfs:domain cc:Refund ;
+    rdfs:range cc:Order .
+
+cc:forReturn
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "for return"@en ;
+    rdfs:domain cc:Refund ;
+    rdfs:range cc:ReturnAuthorization .
+
+cc:refundOfPayment
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "refund of payment"@en ;
+    rdfs:domain cc:Refund ;
+    rdfs:range cc:Payment .
+
+cc:refundStatus
+    a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "refund status"@en ;
+    rdfs:domain cc:Refund ;
+    rdfs:range cc:RefundStatus .
+
+
+# ---- datatype properties ----
+
+cc:isActive
+    a owl:DatatypeProperty ;
+    rdfs:label "is active"@en ;
+    skos:definition "Whether the resource is currently in use."@en ;
+    rdfs:range xsd:boolean .
+
+cc:createdAt
+    a owl:DatatypeProperty ;
+    rdfs:label "created at"@en ;
+    skos:definition "When the source created the record."@en ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:updatedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "updated at"@en ;
+    skos:definition "When the source last changed the record."@en ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:effectiveFrom
+    a owl:DatatypeProperty ;
+    rdfs:label "effective from"@en ;
+    skos:definition "Start of validity."@en ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:effectiveUntil
+    a owl:DatatypeProperty ;
+    rdfs:label "effective until"@en ;
+    skos:definition "End of validity; absent = open-ended."@en ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:websiteUrl
+    a owl:DatatypeProperty ;
+    rdfs:label "website URL"@en ;
+    rdfs:range xsd:anyURI .
+
+cc:phone
+    a owl:DatatypeProperty ;
+    rdfs:label "phone"@en ;
+    rdfs:range xsd:string .
+
+cc:email
+    a owl:DatatypeProperty ;
+    rdfs:label "email"@en ;
+    skos:definition "Lower-case email address."@en ;
+    rdfs:range xsd:string .
+
+cc:quantity
+    a owl:DatatypeProperty ;
+    rdfs:label "quantity"@en ;
+    skos:definition "Number of units; always positive."@en ;
+    rdfs:range xsd:integer .
+
+cc:monetaryAmount
+    a owl:DatatypeProperty ;
+    rdfs:label "monetary amount"@en ;
+    skos:definition "Super-property of every money value."@en ;
+    rdfs:range xsd:decimal ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:identifier
+    a owl:DatatypeProperty ;
+    rdfs:label "identifier"@en ;
+    skos:definition "Super-property of every business identifier."@en ;
+    rdfs:range xsd:string .
+
+cc:countryCode
+    a owl:DatatypeProperty ;
+    rdfs:label "country code"@en ;
+    skos:definition "ISO 3166-1 alpha-2."@en ;
+    rdfs:domain cc:Country ;
+    rdfs:range xsd:string .
+
+cc:countryName
+    a owl:DatatypeProperty ;
+    rdfs:label "country name"@en ;
+    rdfs:domain cc:Country ;
+    rdfs:range xsd:string .
+
+cc:currencyCode
+    a owl:DatatypeProperty ;
+    rdfs:label "currency code"@en ;
+    skos:definition "ISO 4217."@en ;
+    rdfs:domain cc:Currency ;
+    rdfs:range xsd:string .
+
+cc:currencyName
+    a owl:DatatypeProperty ;
+    rdfs:label "currency name"@en ;
+    rdfs:domain cc:Currency ;
+    rdfs:range xsd:string .
+
+cc:minorUnitDigits
+    a owl:DatatypeProperty ;
+    rdfs:label "minor unit digits"@en ;
+    skos:definition "Digits after the decimal point (2 for USD, 0 for JPY)."@en ;
+    rdfs:domain cc:Currency ;
+    rdfs:range xsd:integer .
+
+cc:categoryCode
+    a owl:DatatypeProperty ;
+    rdfs:label "category code"@en ;
+    skos:definition "Stable code or full browse path."@en ;
+    rdfs:domain cc:Category ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:categoryName
+    a owl:DatatypeProperty ;
+    rdfs:label "category name"@en ;
+    rdfs:domain cc:Category ;
+    rdfs:range xsd:string .
+
+cc:categoryDescription
+    a owl:DatatypeProperty ;
+    rdfs:label "category description"@en ;
+    rdfs:domain cc:Category ;
+    rdfs:range xsd:string .
+
+cc:sortOrder
+    a owl:DatatypeProperty ;
+    rdfs:label "sort order"@en ;
+    rdfs:domain cc:Category ;
+    rdfs:range xsd:integer .
+
+cc:manufacturerName
+    a owl:DatatypeProperty ;
+    rdfs:label "manufacturer name"@en ;
+    skos:definition "Legal company name."@en ;
+    rdfs:domain cc:Manufacturer ;
+    rdfs:range xsd:string .
+
+cc:manufacturerCode
+    a owl:DatatypeProperty ;
+    rdfs:label "manufacturer code"@en ;
+    skos:definition "Short code, e.g. SNY."@en ;
+    rdfs:domain cc:Manufacturer ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:supportEmail
+    a owl:DatatypeProperty ;
+    rdfs:label "support email"@en ;
+    skos:definition "Warranty inquiries."@en ;
+    rdfs:domain cc:Manufacturer ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:email .
+
+cc:brandName
+    a owl:DatatypeProperty ;
+    rdfs:label "brand name"@en ;
+    rdfs:domain cc:Brand ;
+    rdfs:range xsd:string .
+
+cc:modelNumber
+    a owl:DatatypeProperty ;
+    rdfs:label "model number"@en ;
+    skos:definition "Manufacturer's model or part number."@en ;
+    rdfs:domain cc:ProductModel ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:modelName
+    a owl:DatatypeProperty ;
+    rdfs:label "model name"@en ;
+    rdfs:domain cc:ProductModel ;
+    rdfs:range xsd:string .
+
+cc:modelYear
+    a owl:DatatypeProperty ;
+    rdfs:label "model year"@en ;
+    rdfs:domain cc:ProductModel ;
+    rdfs:range xsd:integer .
+
+cc:releaseDate
+    a owl:DatatypeProperty ;
+    rdfs:label "release date"@en ;
+    rdfs:domain cc:ProductModel ;
+    rdfs:range xsd:date .
+
+cc:discontinuedDate
+    a owl:DatatypeProperty ;
+    rdfs:label "discontinued date"@en ;
+    skos:definition "Absent while still sold."@en ;
+    rdfs:domain cc:ProductModel ;
+    rdfs:range xsd:date .
+
+cc:sku
+    a owl:DatatypeProperty ;
+    rdfs:label "SKU"@en ;
+    skos:definition "Retailer's stock keeping unit."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:upc
+    a owl:DatatypeProperty ;
+    rdfs:label "UPC"@en ;
+    skos:definition "UPC-A barcode, 12 digits."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:ean
+    a owl:DatatypeProperty ;
+    rdfs:label "EAN"@en ;
+    skos:definition "EAN-13 barcode."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:gtin
+    a owl:DatatypeProperty ;
+    rdfs:label "GTIN"@en ;
+    skos:definition "GTIN-14 case barcode."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:marketplaceProductId
+    a owl:DatatypeProperty ;
+    rdfs:label "marketplace product id"@en ;
+    skos:definition "Marketplace catalog number, e.g. a BigRiver number."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:productName
+    a owl:DatatypeProperty ;
+    rdfs:label "product name"@en ;
+    skos:definition "Short name for search results and carts."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:string .
+
+cc:productLongName
+    a owl:DatatypeProperty ;
+    rdfs:label "product long name"@en ;
+    skos:definition "Title for the detail page."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:string .
+
+cc:productDescription
+    a owl:DatatypeProperty ;
+    rdfs:label "product description"@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:string .
+
+cc:weightInGrams
+    a owl:DatatypeProperty ;
+    rdfs:label "weight in grams"@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:integer ;
+    cc:valueConvention "Grams."@en .
+
+cc:msrp
+    a owl:DatatypeProperty ;
+    rdfs:label "MSRP"@en ;
+    skos:definition "Manufacturer's suggested retail price."@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:isTaxable
+    a owl:DatatypeProperty ;
+    rdfs:label "is taxable"@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:boolean .
+
+cc:isAdultOnly
+    a owl:DatatypeProperty ;
+    rdfs:label "is adult only"@en ;
+    rdfs:domain cc:Product ;
+    rdfs:range xsd:boolean .
+
+cc:attributeKey
+    a owl:DatatypeProperty ;
+    rdfs:label "attribute key"@en ;
+    skos:definition "Lower snake_case, e.g. 'color'."@en ;
+    rdfs:domain cc:ProductAttribute ;
+    rdfs:range xsd:string .
+
+cc:attributeValue
+    a owl:DatatypeProperty ;
+    rdfs:label "attribute value"@en ;
+    rdfs:domain cc:ProductAttribute ;
+    rdfs:range xsd:string .
+
+cc:confidence
+    a owl:DatatypeProperty ;
+    rdfs:label "confidence"@en ;
+    skos:definition "Only for machine-inferred values."@en ;
+    rdfs:domain cc:ProductAttribute ;
+    rdfs:range xsd:decimal ;
+    cc:valueConvention "Fraction 0..1 (0.15 = 15%)."@en .
+
+cc:durationMonths
+    a owl:DatatypeProperty ;
+    rdfs:label "duration in months"@en ;
+    rdfs:domain cc:WarrantyPlan ;
+    rdfs:range xsd:integer .
+
+cc:warrantyProvider
+    a owl:DatatypeProperty ;
+    rdfs:label "warranty provider"@en ;
+    rdfs:domain cc:WarrantyPlan ;
+    rdfs:range xsd:string .
+
+cc:coversParts
+    a owl:DatatypeProperty ;
+    rdfs:label "covers parts"@en ;
+    rdfs:domain cc:WarrantyPlan ;
+    rdfs:range xsd:boolean .
+
+cc:coversLabor
+    a owl:DatatypeProperty ;
+    rdfs:label "covers labor"@en ;
+    rdfs:domain cc:WarrantyPlan ;
+    rdfs:range xsd:boolean .
+
+cc:warrantyTerms
+    a owl:DatatypeProperty ;
+    rdfs:label "warranty terms"@en ;
+    rdfs:domain cc:WarrantyPlan ;
+    rdfs:range xsd:string .
+
+cc:sellerHandle
+    a owl:DatatypeProperty ;
+    rdfs:label "seller handle"@en ;
+    skos:definition "URL-safe unique handle."@en ;
+    rdfs:domain cc:Seller ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:sellerName
+    a owl:DatatypeProperty ;
+    rdfs:label "seller name"@en ;
+    rdfs:domain cc:Seller ;
+    rdfs:range xsd:string .
+
+cc:isFirstParty
+    a owl:DatatypeProperty ;
+    rdfs:label "is first party"@en ;
+    skos:definition "Sold by the platform itself."@en ;
+    rdfs:domain cc:Seller ;
+    rdfs:range xsd:boolean .
+
+cc:sellerRating
+    a owl:DatatypeProperty ;
+    rdfs:label "seller rating"@en ;
+    skos:definition "0.0 to 5.0."@en ;
+    rdfs:domain cc:Seller ;
+    rdfs:range xsd:decimal .
+
+cc:shipsFromRegion
+    a owl:DatatypeProperty ;
+    rdfs:label "ships from region"@en ;
+    skos:definition "ISO 3166-2, e.g. US-NJ."@en ;
+    rdfs:domain cc:Seller ;
+    rdfs:range xsd:string .
+
+cc:fulfilledByPlatform
+    a owl:DatatypeProperty ;
+    rdfs:label "fulfilled by platform"@en ;
+    rdfs:domain cc:Seller ;
+    rdfs:range xsd:boolean .
+
+cc:onboardedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "onboarded at"@en ;
+    rdfs:domain cc:Seller ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:price
+    a owl:DatatypeProperty ;
+    rdfs:label "price"@en ;
+    rdfs:domain cc:Offer ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:cost
+    a owl:DatatypeProperty ;
+    rdfs:label "cost"@en ;
+    skos:definition "Seller's unit cost."@en ;
+    rdfs:domain cc:Offer ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:warehouseCode
+    a owl:DatatypeProperty ;
+    rdfs:label "warehouse code"@en ;
+    rdfs:domain cc:Warehouse ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:warehouseName
+    a owl:DatatypeProperty ;
+    rdfs:label "warehouse name"@en ;
+    rdfs:domain cc:Warehouse ;
+    rdfs:range xsd:string .
+
+cc:quantityOnHand
+    a owl:DatatypeProperty ;
+    rdfs:label "quantity on hand"@en ;
+    rdfs:domain cc:InventoryPosition ;
+    rdfs:range xsd:integer .
+
+cc:quantityReserved
+    a owl:DatatypeProperty ;
+    rdfs:label "quantity reserved"@en ;
+    rdfs:domain cc:InventoryPosition ;
+    rdfs:range xsd:integer .
+
+cc:quantityOnOrder
+    a owl:DatatypeProperty ;
+    rdfs:label "quantity on order"@en ;
+    rdfs:domain cc:InventoryPosition ;
+    rdfs:range xsd:integer .
+
+cc:reorderPoint
+    a owl:DatatypeProperty ;
+    rdfs:label "reorder point"@en ;
+    rdfs:domain cc:InventoryPosition ;
+    rdfs:range xsd:integer .
+
+cc:binLocation
+    a owl:DatatypeProperty ;
+    rdfs:label "bin location"@en ;
+    rdfs:domain cc:InventoryPosition ;
+    rdfs:range xsd:string .
+
+cc:lastCountedDate
+    a owl:DatatypeProperty ;
+    rdfs:label "last counted date"@en ;
+    rdfs:domain cc:InventoryPosition ;
+    rdfs:range xsd:date .
+
+cc:customerNumber
+    a owl:DatatypeProperty ;
+    rdfs:label "customer number"@en ;
+    skos:definition "Account number or id."@en ;
+    rdfs:domain cc:Customer ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:loyaltyNumber
+    a owl:DatatypeProperty ;
+    rdfs:label "loyalty number"@en ;
+    rdfs:domain cc:Customer ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:firstName
+    a owl:DatatypeProperty ;
+    rdfs:label "first name"@en ;
+    rdfs:domain cc:Customer ;
+    rdfs:range xsd:string .
+
+cc:lastName
+    a owl:DatatypeProperty ;
+    rdfs:label "last name"@en ;
+    rdfs:domain cc:Customer ;
+    rdfs:range xsd:string .
+
+cc:marketingOptIn
+    a owl:DatatypeProperty ;
+    rdfs:label "marketing opt-in"@en ;
+    rdfs:domain cc:Customer ;
+    rdfs:range xsd:boolean .
+
+cc:recipientName
+    a owl:DatatypeProperty ;
+    rdfs:label "recipient name"@en ;
+    rdfs:domain cc:Address ;
+    rdfs:range xsd:string .
+
+cc:streetAddress
+    a owl:DatatypeProperty ;
+    rdfs:label "street address"@en ;
+    skos:definition "Street lines joined by newlines."@en ;
+    rdfs:domain cc:Address ;
+    rdfs:range xsd:string .
+
+cc:city
+    a owl:DatatypeProperty ;
+    rdfs:label "city"@en ;
+    rdfs:domain cc:Address ;
+    rdfs:range xsd:string .
+
+cc:regionCode
+    a owl:DatatypeProperty ;
+    rdfs:label "region code"@en ;
+    skos:definition "ISO 3166-2, e.g. US-TX."@en ;
+    rdfs:domain cc:Address ;
+    rdfs:range xsd:string .
+
+cc:postalCode
+    a owl:DatatypeProperty ;
+    rdfs:label "postal code"@en ;
+    rdfs:domain cc:Address ;
+    rdfs:range xsd:string .
+
+cc:orderNumber
+    a owl:DatatypeProperty ;
+    rdfs:label "order number"@en ;
+    skos:definition "Human-readable number; unique within its source."@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:customerEmail
+    a owl:DatatypeProperty ;
+    rdfs:label "customer email"@en ;
+    skos:definition "Email on the order; required for guests."@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:email .
+
+cc:subtotalAmount
+    a owl:DatatypeProperty ;
+    rdfs:label "subtotal"@en ;
+    skos:definition "Sum of quantity x unit price, before discounts."@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:discountTotal
+    a owl:DatatypeProperty ;
+    rdfs:label "discount total"@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:taxTotal
+    a owl:DatatypeProperty ;
+    rdfs:label "tax total"@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:shippingTotal
+    a owl:DatatypeProperty ;
+    rdfs:label "shipping total"@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:grandTotal
+    a owl:DatatypeProperty ;
+    rdfs:label "grand total"@en ;
+    skos:definition "subtotal - discount + tax + shipping."@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:placedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "placed at"@en ;
+    skos:definition "When checkout completed."@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:closedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "closed at"@en ;
+    skos:definition "When it was abandoned, expired or cancelled."@en ;
+    rdfs:domain cc:Order ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:lineNumber
+    a owl:DatatypeProperty ;
+    rdfs:label "line number"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:integer .
+
+cc:unitPrice
+    a owl:DatatypeProperty ;
+    rdfs:label "unit price"@en ;
+    skos:definition "Price per unit in the order currency."@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:originalUnitPrice
+    a owl:DatatypeProperty ;
+    rdfs:label "original unit price"@en ;
+    skos:definition "Price in the seller's currency (cc:originalCurrency)."@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major units of cc:originalCurrency."@en .
+
+cc:exchangeRateToUSD
+    a owl:DatatypeProperty ;
+    rdfs:label "exchange rate to USD"@en ;
+    skos:definition "USD per one unit of the line currency, captured when added."@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:decimal .
+
+cc:lineDiscount
+    a owl:DatatypeProperty ;
+    rdfs:label "line discount"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:lineTax
+    a owl:DatatypeProperty ;
+    rdfs:label "line tax"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:lineTotal
+    a owl:DatatypeProperty ;
+    rdfs:label "line total"@en ;
+    skos:definition "quantity x unit price - line discount."@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:isSubscription
+    a owl:DatatypeProperty ;
+    rdfs:label "is subscription"@en ;
+    skos:definition "Part of a subscribe-and-save plan."@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:boolean .
+
+cc:isGift
+    a owl:DatatypeProperty ;
+    rdfs:label "is gift"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:boolean .
+
+cc:giftMessage
+    a owl:DatatypeProperty ;
+    rdfs:label "gift message"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:string .
+
+cc:giftWrap
+    a owl:DatatypeProperty ;
+    rdfs:label "gift wrap"@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:boolean .
+
+cc:addedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "added at"@en ;
+    skos:definition "When the line was added to the cart."@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:removedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "removed at"@en ;
+    skos:definition "When the shopper removed the line."@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:isRemoved
+    a owl:DatatypeProperty ;
+    rdfs:label "is removed"@en ;
+    skos:definition "The shopper took the line out of the cart."@en ;
+    rdfs:domain cc:OrderLine ;
+    rdfs:range xsd:boolean .
+
+cc:promotionCode
+    a owl:DatatypeProperty ;
+    rdfs:label "promotion code"@en ;
+    skos:definition "Absent for automatic deals."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:promotionName
+    a owl:DatatypeProperty ;
+    rdfs:label "promotion name"@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:string .
+
+cc:promotionDescription
+    a owl:DatatypeProperty ;
+    rdfs:label "promotion description"@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:string .
+
+cc:eventName
+    a owl:DatatypeProperty ;
+    rdfs:label "event name"@en ;
+    skos:definition "e.g. 'Black Friday'."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:string .
+
+cc:partnerCompany
+    a owl:DatatypeProperty ;
+    rdfs:label "partner company"@en ;
+    skos:definition "External co-sponsor."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:string .
+
+cc:discountPercent
+    a owl:DatatypeProperty ;
+    rdfs:label "discount percent"@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:decimal ;
+    cc:valueConvention "Fraction 0..1 (0.15 = 15%)."@en .
+
+cc:amountOff
+    a owl:DatatypeProperty ;
+    rdfs:label "amount off"@en ;
+    skos:definition "Flat amount off."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:minimumOrderAmount
+    a owl:DatatypeProperty ;
+    rdfs:label "minimum order amount"@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:buyQuantity
+    a owl:DatatypeProperty ;
+    rdfs:label "buy quantity"@en ;
+    skos:definition "'Buy 2 get 1': 2."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:integer .
+
+cc:getQuantity
+    a owl:DatatypeProperty ;
+    rdfs:label "get quantity"@en ;
+    skos:definition "'Buy 2 get 1': 1."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:integer .
+
+cc:maxRedemptions
+    a owl:DatatypeProperty ;
+    rdfs:label "max redemptions"@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:integer .
+
+cc:isStackable
+    a owl:DatatypeProperty ;
+    rdfs:label "is stackable"@en ;
+    skos:definition "Can combine with other promotions."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:boolean .
+
+cc:targetAttributeKey
+    a owl:DatatypeProperty ;
+    rdfs:label "target attribute key"@en ;
+    skos:definition "Applies to products with this attribute key..."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:string .
+
+cc:targetAttributeValue
+    a owl:DatatypeProperty ;
+    rdfs:label "target attribute value"@en ;
+    skos:definition "...and this value."@en ;
+    rdfs:domain cc:Promotion ;
+    rdfs:range xsd:string .
+
+cc:discountAmount
+    a owl:DatatypeProperty ;
+    rdfs:label "discount amount"@en ;
+    rdfs:domain cc:AppliedDiscount ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:discountReason
+    a owl:DatatypeProperty ;
+    rdfs:label "discount reason"@en ;
+    skos:definition "Free-text reason, e.g. 'manager override'."@en ;
+    rdfs:domain cc:AppliedDiscount ;
+    rdfs:range xsd:string .
+
+cc:appliedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "applied at"@en ;
+    rdfs:domain cc:AppliedDiscount ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:paymentAmount
+    a owl:DatatypeProperty ;
+    rdfs:label "payment amount"@en ;
+    rdfs:domain cc:Payment ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:cardBrand
+    a owl:DatatypeProperty ;
+    rdfs:label "card brand"@en ;
+    rdfs:domain cc:Payment ;
+    rdfs:range xsd:string .
+
+cc:cardLast4
+    a owl:DatatypeProperty ;
+    rdfs:label "card last 4"@en ;
+    skos:definition "Never the full card number."@en ;
+    rdfs:domain cc:Payment ;
+    rdfs:range xsd:string .
+
+cc:processorReference
+    a owl:DatatypeProperty ;
+    rdfs:label "processor reference"@en ;
+    skos:definition "Payment gateway reference."@en ;
+    rdfs:range xsd:string .
+
+cc:authorizedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "authorized at"@en ;
+    rdfs:domain cc:Payment ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:capturedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "captured at"@en ;
+    rdfs:domain cc:Payment ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:carrier
+    a owl:DatatypeProperty ;
+    rdfs:label "carrier"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range xsd:string .
+
+cc:serviceLevel
+    a owl:DatatypeProperty ;
+    rdfs:label "service level"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range xsd:string .
+
+cc:trackingNumber
+    a owl:DatatypeProperty ;
+    rdfs:label "tracking number"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:shippingCost
+    a owl:DatatypeProperty ;
+    rdfs:label "shipping cost"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:shippedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "shipped at"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:deliveredAt
+    a owl:DatatypeProperty ;
+    rdfs:label "delivered at"@en ;
+    rdfs:domain cc:Shipment ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:rmaNumber
+    a owl:DatatypeProperty ;
+    rdfs:label "RMA number"@en ;
+    rdfs:domain cc:ReturnAuthorization ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cc:identifier .
+
+cc:requestedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "requested at"@en ;
+    rdfs:domain cc:ReturnAuthorization ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:approvedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "approved at"@en ;
+    rdfs:domain cc:ReturnAuthorization ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:receivedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "received at"@en ;
+    rdfs:domain cc:ReturnAuthorization ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:returnClosedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "return closed at"@en ;
+    rdfs:domain cc:ReturnAuthorization ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+cc:restockingFee
+    a owl:DatatypeProperty ;
+    rdfs:label "restocking fee"@en ;
+    rdfs:domain cc:ReturnLine ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:refundAmount
+    a owl:DatatypeProperty ;
+    rdfs:label "refund amount"@en ;
+    rdfs:domain cc:Refund ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf cc:monetaryAmount ;
+    cc:valueConvention "Major currency units of cc:hasCurrency (19.99)."@en .
+
+cc:refundedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "refunded at"@en ;
+    rdfs:domain cc:Refund ;
+    rdfs:range xsd:dateTime ;
+    cc:valueConvention "UTC."@en .
+
+
+# ---- code lists ----
+
+cc:OrderStatus owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:OrderStatus_CART cc:OrderStatus_SAVED_FOR_LATER cc:OrderStatus_ABANDONED cc:OrderStatus_EXPIRED cc:OrderStatus_PLACED cc:OrderStatus_PAID cc:OrderStatus_PARTIALLY_SHIPPED cc:OrderStatus_SHIPPED cc:OrderStatus_DELIVERED cc:OrderStatus_CANCELLED cc:OrderStatus_PARTIALLY_RETURNED cc:OrderStatus_RETURNED ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:OrderStatus_CART cc:OrderStatus_SAVED_FOR_LATER cc:OrderStatus_ABANDONED cc:OrderStatus_EXPIRED cc:OrderStatus_PLACED cc:OrderStatus_PAID cc:OrderStatus_PARTIALLY_SHIPPED cc:OrderStatus_SHIPPED cc:OrderStatus_DELIVERED cc:OrderStatus_CANCELLED cc:OrderStatus_PARTIALLY_RETURNED cc:OrderStatus_RETURNED ) .
+
+cc:OrderStatus_CART
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Cart"@en ;
+    skos:notation "CART" ;
+    skos:definition "Shopper is still adding items."@en .
+
+cc:OrderStatus_SAVED_FOR_LATER
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Saved for later"@en ;
+    skos:notation "SAVED_FOR_LATER" ;
+    skos:definition "Shopper parked the cart."@en .
+
+cc:OrderStatus_ABANDONED
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Abandoned"@en ;
+    skos:notation "ABANDONED" ;
+    skos:definition "Shopper left without buying."@en .
+
+cc:OrderStatus_EXPIRED
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Expired"@en ;
+    skos:notation "EXPIRED" ;
+    skos:definition "Cart timed out without being bought."@en .
+
+cc:OrderStatus_PLACED
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Placed"@en ;
+    skos:notation "PLACED" ;
+    skos:definition "Checked out, not yet paid or shipped."@en .
+
+cc:OrderStatus_PAID
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Paid"@en ;
+    skos:notation "PAID" ;
+    skos:definition "Payment captured."@en .
+
+cc:OrderStatus_PARTIALLY_SHIPPED
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Partially shipped"@en ;
+    skos:notation "PARTIALLY_SHIPPED" ;
+    skos:definition "Some lines have shipped."@en .
+
+cc:OrderStatus_SHIPPED
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Shipped"@en ;
+    skos:notation "SHIPPED" ;
+    skos:definition "All lines have shipped."@en .
+
+cc:OrderStatus_DELIVERED
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Delivered"@en ;
+    skos:notation "DELIVERED" ;
+    skos:definition "Delivered to the customer."@en .
+
+cc:OrderStatus_CANCELLED
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Cancelled"@en ;
+    skos:notation "CANCELLED" ;
+    skos:definition "Cancelled before fulfilment."@en .
+
+cc:OrderStatus_PARTIALLY_RETURNED
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Partially returned"@en ;
+    skos:notation "PARTIALLY_RETURNED" ;
+    skos:definition "Some units came back."@en .
+
+cc:OrderStatus_RETURNED
+    a owl:NamedIndividual , cc:OrderStatus ;
+    rdfs:label "Returned"@en ;
+    skos:notation "RETURNED" ;
+    skos:definition "Everything came back."@en .
+
+cc:SalesChannel owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:SalesChannel_WEB cc:SalesChannel_APP cc:SalesChannel_POS cc:SalesChannel_VOICE ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:SalesChannel_WEB cc:SalesChannel_APP cc:SalesChannel_POS cc:SalesChannel_VOICE ) .
+
+cc:SalesChannel_WEB
+    a owl:NamedIndividual , cc:SalesChannel ;
+    rdfs:label "Web"@en ;
+    skos:notation "WEB" ;
+    skos:definition "Website."@en .
+
+cc:SalesChannel_APP
+    a owl:NamedIndividual , cc:SalesChannel ;
+    rdfs:label "App"@en ;
+    skos:notation "APP" ;
+    skos:definition "Mobile app."@en .
+
+cc:SalesChannel_POS
+    a owl:NamedIndividual , cc:SalesChannel ;
+    rdfs:label "Point of sale"@en ;
+    skos:notation "POS" ;
+    skos:definition "In-store register."@en .
+
+cc:SalesChannel_VOICE
+    a owl:NamedIndividual , cc:SalesChannel ;
+    rdfs:label "Voice"@en ;
+    skos:notation "VOICE" ;
+    skos:definition "Voice assistant."@en .
+
+cc:DeviceType owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:DeviceType_IOS cc:DeviceType_ANDROID cc:DeviceType_DESKTOP cc:DeviceType_ALEXA cc:DeviceType_KIOSK ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:DeviceType_IOS cc:DeviceType_ANDROID cc:DeviceType_DESKTOP cc:DeviceType_ALEXA cc:DeviceType_KIOSK ) .
+
+cc:DeviceType_IOS
+    a owl:NamedIndividual , cc:DeviceType ;
+    rdfs:label "iOS"@en ;
+    skos:notation "IOS" .
+
+cc:DeviceType_ANDROID
+    a owl:NamedIndividual , cc:DeviceType ;
+    rdfs:label "Android"@en ;
+    skos:notation "ANDROID" .
+
+cc:DeviceType_DESKTOP
+    a owl:NamedIndividual , cc:DeviceType ;
+    rdfs:label "Desktop"@en ;
+    skos:notation "DESKTOP" .
+
+cc:DeviceType_ALEXA
+    a owl:NamedIndividual , cc:DeviceType ;
+    rdfs:label "Voice speaker"@en ;
+    skos:notation "ALEXA" .
+
+cc:DeviceType_KIOSK
+    a owl:NamedIndividual , cc:DeviceType ;
+    rdfs:label "Kiosk"@en ;
+    skos:notation "KIOSK" .
+
+cc:SellerStatus owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:SellerStatus_LIVE cc:SellerStatus_SUSPENDED cc:SellerStatus_CLOSED ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:SellerStatus_LIVE cc:SellerStatus_SUSPENDED cc:SellerStatus_CLOSED ) .
+
+cc:SellerStatus_LIVE
+    a owl:NamedIndividual , cc:SellerStatus ;
+    rdfs:label "Live"@en ;
+    skos:notation "LIVE" ;
+    skos:definition "Selling."@en .
+
+cc:SellerStatus_SUSPENDED
+    a owl:NamedIndividual , cc:SellerStatus ;
+    rdfs:label "Suspended"@en ;
+    skos:notation "SUSPENDED" ;
+    skos:definition "Temporarily blocked."@en .
+
+cc:SellerStatus_CLOSED
+    a owl:NamedIndividual , cc:SellerStatus ;
+    rdfs:label "Closed"@en ;
+    skos:notation "CLOSED" ;
+    skos:definition "No longer selling."@en .
+
+cc:ItemCondition owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:ItemCondition_NEW cc:ItemCondition_REFURBISHED cc:ItemCondition_USED cc:ItemCondition_OPEN_BOX ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:ItemCondition_NEW cc:ItemCondition_REFURBISHED cc:ItemCondition_USED cc:ItemCondition_OPEN_BOX ) .
+
+cc:ItemCondition_NEW
+    a owl:NamedIndividual , cc:ItemCondition ;
+    rdfs:label "New"@en ;
+    skos:notation "NEW" .
+
+cc:ItemCondition_REFURBISHED
+    a owl:NamedIndividual , cc:ItemCondition ;
+    rdfs:label "Refurbished"@en ;
+    skos:notation "REFURBISHED" .
+
+cc:ItemCondition_USED
+    a owl:NamedIndividual , cc:ItemCondition ;
+    rdfs:label "Used"@en ;
+    skos:notation "USED" .
+
+cc:ItemCondition_OPEN_BOX
+    a owl:NamedIndividual , cc:ItemCondition ;
+    rdfs:label "Open box"@en ;
+    skos:notation "OPEN_BOX" .
+
+cc:PromotionScope owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:PromotionScope_SITEWIDE cc:PromotionScope_ORDER cc:PromotionScope_ITEM ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:PromotionScope_SITEWIDE cc:PromotionScope_ORDER cc:PromotionScope_ITEM ) .
+
+cc:PromotionScope_SITEWIDE
+    a owl:NamedIndividual , cc:PromotionScope ;
+    rdfs:label "Sitewide"@en ;
+    skos:notation "SITEWIDE" ;
+    skos:definition "Discounts every eligible line."@en .
+
+cc:PromotionScope_ORDER
+    a owl:NamedIndividual , cc:PromotionScope ;
+    rdfs:label "Order level"@en ;
+    skos:notation "ORDER" ;
+    skos:definition "Discounts the order or cart total."@en .
+
+cc:PromotionScope_ITEM
+    a owl:NamedIndividual , cc:PromotionScope ;
+    rdfs:label "Item level"@en ;
+    skos:notation "ITEM" ;
+    skos:definition "Discounts specific targeted lines."@en .
+
+cc:FundingSource owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:FundingSource_PLATFORM cc:FundingSource_SELLER cc:FundingSource_MANUFACTURER cc:FundingSource_PARTNER ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:FundingSource_PLATFORM cc:FundingSource_SELLER cc:FundingSource_MANUFACTURER cc:FundingSource_PARTNER ) .
+
+cc:FundingSource_PLATFORM
+    a owl:NamedIndividual , cc:FundingSource ;
+    rdfs:label "Platform"@en ;
+    skos:notation "PLATFORM" ;
+    skos:definition "The retailer or marketplace pays."@en .
+
+cc:FundingSource_SELLER
+    a owl:NamedIndividual , cc:FundingSource ;
+    rdfs:label "Seller"@en ;
+    skos:notation "SELLER" ;
+    skos:definition "A third-party seller pays."@en .
+
+cc:FundingSource_MANUFACTURER
+    a owl:NamedIndividual , cc:FundingSource ;
+    rdfs:label "Manufacturer"@en ;
+    skos:notation "MANUFACTURER" ;
+    skos:definition "The brand or manufacturer pays."@en .
+
+cc:FundingSource_PARTNER
+    a owl:NamedIndividual , cc:FundingSource ;
+    rdfs:label "Partner"@en ;
+    skos:notation "PARTNER" ;
+    skos:definition "An outside co-sponsor pays."@en .
+
+cc:AttributeSource owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:AttributeSource_SELLER cc:AttributeSource_BRAND cc:AttributeSource_ML cc:AttributeSource_CATALOG ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:AttributeSource_SELLER cc:AttributeSource_BRAND cc:AttributeSource_ML cc:AttributeSource_CATALOG ) .
+
+cc:AttributeSource_SELLER
+    a owl:NamedIndividual , cc:AttributeSource ;
+    rdfs:label "Seller"@en ;
+    skos:notation "SELLER" ;
+    skos:definition "Entered by the seller."@en .
+
+cc:AttributeSource_BRAND
+    a owl:NamedIndividual , cc:AttributeSource ;
+    rdfs:label "Brand"@en ;
+    skos:notation "BRAND" ;
+    skos:definition "Supplied by the brand."@en .
+
+cc:AttributeSource_ML
+    a owl:NamedIndividual , cc:AttributeSource ;
+    rdfs:label "Machine inferred"@en ;
+    skos:notation "ML" ;
+    skos:definition "Inferred by a model; has a confidence."@en .
+
+cc:AttributeSource_CATALOG
+    a owl:NamedIndividual , cc:AttributeSource ;
+    rdfs:label "Catalog"@en ;
+    skos:notation "CATALOG" ;
+    skos:definition "Curated by the catalog team."@en .
+
+cc:WarrantyType owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:WarrantyType_MANUFACTURER cc:WarrantyType_EXTENDED cc:WarrantyType_NONE ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:WarrantyType_MANUFACTURER cc:WarrantyType_EXTENDED cc:WarrantyType_NONE ) .
+
+cc:WarrantyType_MANUFACTURER
+    a owl:NamedIndividual , cc:WarrantyType ;
+    rdfs:label "Manufacturer warranty"@en ;
+    skos:notation "MANUFACTURER" ;
+    skos:definition "Included by the manufacturer."@en .
+
+cc:WarrantyType_EXTENDED
+    a owl:NamedIndividual , cc:WarrantyType ;
+    rdfs:label "Extended warranty"@en ;
+    skos:notation "EXTENDED" ;
+    skos:definition "Sold separately."@en .
+
+cc:WarrantyType_NONE
+    a owl:NamedIndividual , cc:WarrantyType ;
+    rdfs:label "No warranty"@en ;
+    skos:notation "NONE" ;
+    skos:definition "Explicitly no warranty."@en .
+
+cc:CustomerStatus owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:CustomerStatus_ACTIVE cc:CustomerStatus_SUSPENDED cc:CustomerStatus_CLOSED ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:CustomerStatus_ACTIVE cc:CustomerStatus_SUSPENDED cc:CustomerStatus_CLOSED ) .
+
+cc:CustomerStatus_ACTIVE
+    a owl:NamedIndividual , cc:CustomerStatus ;
+    rdfs:label "Active"@en ;
+    skos:notation "ACTIVE" .
+
+cc:CustomerStatus_SUSPENDED
+    a owl:NamedIndividual , cc:CustomerStatus ;
+    rdfs:label "Suspended"@en ;
+    skos:notation "SUSPENDED" .
+
+cc:CustomerStatus_CLOSED
+    a owl:NamedIndividual , cc:CustomerStatus ;
+    rdfs:label "Closed"@en ;
+    skos:notation "CLOSED" .
+
+cc:PaymentMethod owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:PaymentMethod_CARD cc:PaymentMethod_PAYPAL cc:PaymentMethod_APPLE_PAY cc:PaymentMethod_GOOGLE_PAY cc:PaymentMethod_GIFT_CARD cc:PaymentMethod_STORE_CREDIT cc:PaymentMethod_CASH cc:PaymentMethod_BANK_TRANSFER ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:PaymentMethod_CARD cc:PaymentMethod_PAYPAL cc:PaymentMethod_APPLE_PAY cc:PaymentMethod_GOOGLE_PAY cc:PaymentMethod_GIFT_CARD cc:PaymentMethod_STORE_CREDIT cc:PaymentMethod_CASH cc:PaymentMethod_BANK_TRANSFER ) .
+
+cc:PaymentMethod_CARD
+    a owl:NamedIndividual , cc:PaymentMethod ;
+    rdfs:label "Card"@en ;
+    skos:notation "CARD" .
+
+cc:PaymentMethod_PAYPAL
+    a owl:NamedIndividual , cc:PaymentMethod ;
+    rdfs:label "PayPal"@en ;
+    skos:notation "PAYPAL" .
+
+cc:PaymentMethod_APPLE_PAY
+    a owl:NamedIndividual , cc:PaymentMethod ;
+    rdfs:label "Apple Pay"@en ;
+    skos:notation "APPLE_PAY" .
+
+cc:PaymentMethod_GOOGLE_PAY
+    a owl:NamedIndividual , cc:PaymentMethod ;
+    rdfs:label "Google Pay"@en ;
+    skos:notation "GOOGLE_PAY" .
+
+cc:PaymentMethod_GIFT_CARD
+    a owl:NamedIndividual , cc:PaymentMethod ;
+    rdfs:label "Gift card"@en ;
+    skos:notation "GIFT_CARD" .
+
+cc:PaymentMethod_STORE_CREDIT
+    a owl:NamedIndividual , cc:PaymentMethod ;
+    rdfs:label "Store credit"@en ;
+    skos:notation "STORE_CREDIT" .
+
+cc:PaymentMethod_CASH
+    a owl:NamedIndividual , cc:PaymentMethod ;
+    rdfs:label "Cash"@en ;
+    skos:notation "CASH" .
+
+cc:PaymentMethod_BANK_TRANSFER
+    a owl:NamedIndividual , cc:PaymentMethod ;
+    rdfs:label "Bank transfer"@en ;
+    skos:notation "BANK_TRANSFER" .
+
+cc:PaymentStatus owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:PaymentStatus_AUTHORIZED cc:PaymentStatus_CAPTURED cc:PaymentStatus_VOIDED cc:PaymentStatus_FAILED cc:PaymentStatus_REFUNDED cc:PaymentStatus_PARTIALLY_REFUNDED ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:PaymentStatus_AUTHORIZED cc:PaymentStatus_CAPTURED cc:PaymentStatus_VOIDED cc:PaymentStatus_FAILED cc:PaymentStatus_REFUNDED cc:PaymentStatus_PARTIALLY_REFUNDED ) .
+
+cc:PaymentStatus_AUTHORIZED
+    a owl:NamedIndividual , cc:PaymentStatus ;
+    rdfs:label "Authorized"@en ;
+    skos:notation "AUTHORIZED" .
+
+cc:PaymentStatus_CAPTURED
+    a owl:NamedIndividual , cc:PaymentStatus ;
+    rdfs:label "Captured"@en ;
+    skos:notation "CAPTURED" .
+
+cc:PaymentStatus_VOIDED
+    a owl:NamedIndividual , cc:PaymentStatus ;
+    rdfs:label "Voided"@en ;
+    skos:notation "VOIDED" .
+
+cc:PaymentStatus_FAILED
+    a owl:NamedIndividual , cc:PaymentStatus ;
+    rdfs:label "Failed"@en ;
+    skos:notation "FAILED" .
+
+cc:PaymentStatus_REFUNDED
+    a owl:NamedIndividual , cc:PaymentStatus ;
+    rdfs:label "Refunded"@en ;
+    skos:notation "REFUNDED" .
+
+cc:PaymentStatus_PARTIALLY_REFUNDED
+    a owl:NamedIndividual , cc:PaymentStatus ;
+    rdfs:label "Partially refunded"@en ;
+    skos:notation "PARTIALLY_REFUNDED" .
+
+cc:ShipmentStatus owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:ShipmentStatus_PENDING cc:ShipmentStatus_PACKED cc:ShipmentStatus_SHIPPED cc:ShipmentStatus_IN_TRANSIT cc:ShipmentStatus_DELIVERED cc:ShipmentStatus_EXCEPTION cc:ShipmentStatus_RETURNED ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:ShipmentStatus_PENDING cc:ShipmentStatus_PACKED cc:ShipmentStatus_SHIPPED cc:ShipmentStatus_IN_TRANSIT cc:ShipmentStatus_DELIVERED cc:ShipmentStatus_EXCEPTION cc:ShipmentStatus_RETURNED ) .
+
+cc:ShipmentStatus_PENDING
+    a owl:NamedIndividual , cc:ShipmentStatus ;
+    rdfs:label "Pending"@en ;
+    skos:notation "PENDING" .
+
+cc:ShipmentStatus_PACKED
+    a owl:NamedIndividual , cc:ShipmentStatus ;
+    rdfs:label "Packed"@en ;
+    skos:notation "PACKED" .
+
+cc:ShipmentStatus_SHIPPED
+    a owl:NamedIndividual , cc:ShipmentStatus ;
+    rdfs:label "Shipped"@en ;
+    skos:notation "SHIPPED" .
+
+cc:ShipmentStatus_IN_TRANSIT
+    a owl:NamedIndividual , cc:ShipmentStatus ;
+    rdfs:label "In transit"@en ;
+    skos:notation "IN_TRANSIT" .
+
+cc:ShipmentStatus_DELIVERED
+    a owl:NamedIndividual , cc:ShipmentStatus ;
+    rdfs:label "Delivered"@en ;
+    skos:notation "DELIVERED" .
+
+cc:ShipmentStatus_EXCEPTION
+    a owl:NamedIndividual , cc:ShipmentStatus ;
+    rdfs:label "Exception"@en ;
+    skos:notation "EXCEPTION" .
+
+cc:ShipmentStatus_RETURNED
+    a owl:NamedIndividual , cc:ShipmentStatus ;
+    rdfs:label "Returned to sender"@en ;
+    skos:notation "RETURNED" .
+
+cc:ReturnStatus owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:ReturnStatus_REQUESTED cc:ReturnStatus_APPROVED cc:ReturnStatus_REJECTED cc:ReturnStatus_IN_TRANSIT cc:ReturnStatus_RECEIVED cc:ReturnStatus_INSPECTED cc:ReturnStatus_COMPLETED cc:ReturnStatus_CANCELLED ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:ReturnStatus_REQUESTED cc:ReturnStatus_APPROVED cc:ReturnStatus_REJECTED cc:ReturnStatus_IN_TRANSIT cc:ReturnStatus_RECEIVED cc:ReturnStatus_INSPECTED cc:ReturnStatus_COMPLETED cc:ReturnStatus_CANCELLED ) .
+
+cc:ReturnStatus_REQUESTED
+    a owl:NamedIndividual , cc:ReturnStatus ;
+    rdfs:label "Requested"@en ;
+    skos:notation "REQUESTED" .
+
+cc:ReturnStatus_APPROVED
+    a owl:NamedIndividual , cc:ReturnStatus ;
+    rdfs:label "Approved"@en ;
+    skos:notation "APPROVED" .
+
+cc:ReturnStatus_REJECTED
+    a owl:NamedIndividual , cc:ReturnStatus ;
+    rdfs:label "Rejected"@en ;
+    skos:notation "REJECTED" .
+
+cc:ReturnStatus_IN_TRANSIT
+    a owl:NamedIndividual , cc:ReturnStatus ;
+    rdfs:label "In transit"@en ;
+    skos:notation "IN_TRANSIT" .
+
+cc:ReturnStatus_RECEIVED
+    a owl:NamedIndividual , cc:ReturnStatus ;
+    rdfs:label "Received"@en ;
+    skos:notation "RECEIVED" .
+
+cc:ReturnStatus_INSPECTED
+    a owl:NamedIndividual , cc:ReturnStatus ;
+    rdfs:label "Inspected"@en ;
+    skos:notation "INSPECTED" .
+
+cc:ReturnStatus_COMPLETED
+    a owl:NamedIndividual , cc:ReturnStatus ;
+    rdfs:label "Completed"@en ;
+    skos:notation "COMPLETED" .
+
+cc:ReturnStatus_CANCELLED
+    a owl:NamedIndividual , cc:ReturnStatus ;
+    rdfs:label "Cancelled"@en ;
+    skos:notation "CANCELLED" .
+
+cc:ReturnReason owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:ReturnReason_DEFECTIVE cc:ReturnReason_DAMAGED_IN_TRANSIT cc:ReturnReason_WRONG_ITEM cc:ReturnReason_NOT_AS_DESCRIBED cc:ReturnReason_MISSING_PARTS cc:ReturnReason_NO_LONGER_NEEDED cc:ReturnReason_BETTER_PRICE cc:ReturnReason_ORDERED_BY_MISTAKE cc:ReturnReason_UNSPECIFIED ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:ReturnReason_DEFECTIVE cc:ReturnReason_DAMAGED_IN_TRANSIT cc:ReturnReason_WRONG_ITEM cc:ReturnReason_NOT_AS_DESCRIBED cc:ReturnReason_MISSING_PARTS cc:ReturnReason_NO_LONGER_NEEDED cc:ReturnReason_BETTER_PRICE cc:ReturnReason_ORDERED_BY_MISTAKE cc:ReturnReason_UNSPECIFIED ) .
+
+cc:ReturnReason_DEFECTIVE
+    a owl:NamedIndividual , cc:ReturnReason ;
+    rdfs:label "Defective"@en ;
+    skos:notation "DEFECTIVE" .
+
+cc:ReturnReason_DAMAGED_IN_TRANSIT
+    a owl:NamedIndividual , cc:ReturnReason ;
+    rdfs:label "Damaged in transit"@en ;
+    skos:notation "DAMAGED_IN_TRANSIT" .
+
+cc:ReturnReason_WRONG_ITEM
+    a owl:NamedIndividual , cc:ReturnReason ;
+    rdfs:label "Wrong item"@en ;
+    skos:notation "WRONG_ITEM" .
+
+cc:ReturnReason_NOT_AS_DESCRIBED
+    a owl:NamedIndividual , cc:ReturnReason ;
+    rdfs:label "Not as described"@en ;
+    skos:notation "NOT_AS_DESCRIBED" .
+
+cc:ReturnReason_MISSING_PARTS
+    a owl:NamedIndividual , cc:ReturnReason ;
+    rdfs:label "Missing parts"@en ;
+    skos:notation "MISSING_PARTS" .
+
+cc:ReturnReason_NO_LONGER_NEEDED
+    a owl:NamedIndividual , cc:ReturnReason ;
+    rdfs:label "No longer needed"@en ;
+    skos:notation "NO_LONGER_NEEDED" .
+
+cc:ReturnReason_BETTER_PRICE
+    a owl:NamedIndividual , cc:ReturnReason ;
+    rdfs:label "Better price elsewhere"@en ;
+    skos:notation "BETTER_PRICE" .
+
+cc:ReturnReason_ORDERED_BY_MISTAKE
+    a owl:NamedIndividual , cc:ReturnReason ;
+    rdfs:label "Ordered by mistake"@en ;
+    skos:notation "ORDERED_BY_MISTAKE" .
+
+cc:ReturnReason_UNSPECIFIED
+    a owl:NamedIndividual , cc:ReturnReason ;
+    rdfs:label "Unspecified"@en ;
+    skos:notation "UNSPECIFIED" ;
+    skos:definition "The source did not record a reason."@en .
+
+cc:ReturnResolution owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:ReturnResolution_REFUND cc:ReturnResolution_REPLACEMENT cc:ReturnResolution_EXCHANGE cc:ReturnResolution_STORE_CREDIT cc:ReturnResolution_REPAIR ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:ReturnResolution_REFUND cc:ReturnResolution_REPLACEMENT cc:ReturnResolution_EXCHANGE cc:ReturnResolution_STORE_CREDIT cc:ReturnResolution_REPAIR ) .
+
+cc:ReturnResolution_REFUND
+    a owl:NamedIndividual , cc:ReturnResolution ;
+    rdfs:label "Refund"@en ;
+    skos:notation "REFUND" .
+
+cc:ReturnResolution_REPLACEMENT
+    a owl:NamedIndividual , cc:ReturnResolution ;
+    rdfs:label "Replacement"@en ;
+    skos:notation "REPLACEMENT" .
+
+cc:ReturnResolution_EXCHANGE
+    a owl:NamedIndividual , cc:ReturnResolution ;
+    rdfs:label "Exchange"@en ;
+    skos:notation "EXCHANGE" .
+
+cc:ReturnResolution_STORE_CREDIT
+    a owl:NamedIndividual , cc:ReturnResolution ;
+    rdfs:label "Store credit"@en ;
+    skos:notation "STORE_CREDIT" .
+
+cc:ReturnResolution_REPAIR
+    a owl:NamedIndividual , cc:ReturnResolution ;
+    rdfs:label "Repair"@en ;
+    skos:notation "REPAIR" .
+
+cc:ReturnedCondition owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:ReturnedCondition_NEW cc:ReturnedCondition_OPENED cc:ReturnedCondition_USED cc:ReturnedCondition_DAMAGED cc:ReturnedCondition_DEFECTIVE cc:ReturnedCondition_MISSING_PARTS ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:ReturnedCondition_NEW cc:ReturnedCondition_OPENED cc:ReturnedCondition_USED cc:ReturnedCondition_DAMAGED cc:ReturnedCondition_DEFECTIVE cc:ReturnedCondition_MISSING_PARTS ) .
+
+cc:ReturnedCondition_NEW
+    a owl:NamedIndividual , cc:ReturnedCondition ;
+    rdfs:label "New"@en ;
+    skos:notation "NEW" .
+
+cc:ReturnedCondition_OPENED
+    a owl:NamedIndividual , cc:ReturnedCondition ;
+    rdfs:label "Opened"@en ;
+    skos:notation "OPENED" .
+
+cc:ReturnedCondition_USED
+    a owl:NamedIndividual , cc:ReturnedCondition ;
+    rdfs:label "Used"@en ;
+    skos:notation "USED" .
+
+cc:ReturnedCondition_DAMAGED
+    a owl:NamedIndividual , cc:ReturnedCondition ;
+    rdfs:label "Damaged"@en ;
+    skos:notation "DAMAGED" .
+
+cc:ReturnedCondition_DEFECTIVE
+    a owl:NamedIndividual , cc:ReturnedCondition ;
+    rdfs:label "Defective"@en ;
+    skos:notation "DEFECTIVE" .
+
+cc:ReturnedCondition_MISSING_PARTS
+    a owl:NamedIndividual , cc:ReturnedCondition ;
+    rdfs:label "Missing parts"@en ;
+    skos:notation "MISSING_PARTS" .
+
+cc:Disposition owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:Disposition_RESTOCK cc:Disposition_REFURBISH cc:Disposition_RETURN_TO_VENDOR cc:Disposition_LIQUIDATE cc:Disposition_SCRAP ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:Disposition_RESTOCK cc:Disposition_REFURBISH cc:Disposition_RETURN_TO_VENDOR cc:Disposition_LIQUIDATE cc:Disposition_SCRAP ) .
+
+cc:Disposition_RESTOCK
+    a owl:NamedIndividual , cc:Disposition ;
+    rdfs:label "Restock"@en ;
+    skos:notation "RESTOCK" .
+
+cc:Disposition_REFURBISH
+    a owl:NamedIndividual , cc:Disposition ;
+    rdfs:label "Refurbish"@en ;
+    skos:notation "REFURBISH" .
+
+cc:Disposition_RETURN_TO_VENDOR
+    a owl:NamedIndividual , cc:Disposition ;
+    rdfs:label "Return to vendor"@en ;
+    skos:notation "RETURN_TO_VENDOR" .
+
+cc:Disposition_LIQUIDATE
+    a owl:NamedIndividual , cc:Disposition ;
+    rdfs:label "Liquidate"@en ;
+    skos:notation "LIQUIDATE" .
+
+cc:Disposition_SCRAP
+    a owl:NamedIndividual , cc:Disposition ;
+    rdfs:label "Scrap"@en ;
+    skos:notation "SCRAP" .
+
+cc:RefundStatus owl:equivalentClass [ a owl:Class ; owl:oneOf ( cc:RefundStatus_PENDING cc:RefundStatus_COMPLETED cc:RefundStatus_FAILED ) ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( cc:RefundStatus_PENDING cc:RefundStatus_COMPLETED cc:RefundStatus_FAILED ) .
+
+cc:RefundStatus_PENDING
+    a owl:NamedIndividual , cc:RefundStatus ;
+    rdfs:label "Pending"@en ;
+    skos:notation "PENDING" .
+
+cc:RefundStatus_COMPLETED
+    a owl:NamedIndividual , cc:RefundStatus ;
+    rdfs:label "Completed"@en ;
+    skos:notation "COMPLETED" .
+
+cc:RefundStatus_FAILED
+    a owl:NamedIndividual , cc:RefundStatus ;
+    rdfs:label "Failed"@en ;
+    skos:notation "FAILED" .

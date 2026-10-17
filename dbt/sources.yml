@@ -1,0 +1,40 @@
+version: 2
+
+# Sources for the AcmeShopping -> canonical model load.
+#
+# Adapter: dbt-sqlite. Each SQLite file is attached as a schema in
+# profiles.yml, e.g.
+#   schemas_and_paths:
+#     main: /path/to/canonical.db     # canonical_ecommerce.sql
+#     acme: /path/to/acme.db          # acme_shopping.sql
+#   schema: main
+#
+# The canonical tables must already exist (run canonical_ecommerce.sql
+# first). The models load INTO those tables incrementally so the
+# canonical CHECK, UNIQUE and FOREIGN KEY constraints are kept.
+
+sources:
+  - name: acme
+    description: AcmeShopping source system (acme_shopping.sql)
+    schema: acme
+    quoting:
+      identifier: true          # "Order" is a reserved word
+    tables:
+      - name: CatalogCategory
+      - name: Brand
+      - name: Model
+      - name: Promotions
+      - name: Order
+      - name: OrderItem
+
+  - name: canonical
+    description: >
+      Canonical reference and lineage tables that the models read but do
+      not build (canonical_ecommerce.sql).
+    schema: main
+    tables:
+      - name: source_system
+      - name: source_key_map
+      - name: country
+      - name: currency
+      - name: seller
