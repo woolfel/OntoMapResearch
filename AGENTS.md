@@ -54,20 +54,22 @@ When a task involves mapping, transforming, migrating, comparing or loading data
 
 ## Commands
 
-All Python that needs rdflib runs from the project virtual environment `ontology/.venv`.
+Run Python with the project environment activated: the conda environment `ontomap` (`environment.yml`)
+or a virtual environment built from `requirements.txt`. If neither exists, create one first; see the
+README's Getting started section.
 
 ```bash
 # mapping tool (one-off, JSON to stdout)
-ontology/.venv/bin/python ontology/mapping_service.py map --source bobs_uncle.sql --target canonical_ecommerce.sql
+python ontology/mapping_service.py map --source bobs_uncle.sql --target canonical_ecommerce.sql
 # mapping tool (long-running HTTP service on 127.0.0.1:8765)
-ontology/.venv/bin/python ontology/mapping_service.py serve
+python ontology/mapping_service.py serve
 # rebuild + validate the ontologies after editing core_spec.py / binding_spec.py
 python3 ontology/build_ontologies.py
 # competency questions (must all PASS)
-ontology/.venv/bin/python ontology/run_competency_questions.py
+python ontology/run_competency_questions.py
 # diagrams
-ontology/.venv/bin/python ontology/build_class_diagram.py
-ontology/.venv/bin/python ontology/build_binding_diagram.py
+python ontology/build_class_diagram.py
+python ontology/build_binding_diagram.py
 ```
 
 ## Data and safety

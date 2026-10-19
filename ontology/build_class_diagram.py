@@ -1,6 +1,6 @@
 """Draw a UML-style class diagram of commerce_core.ttl as an editable SVG.
 
-    ontology/.venv/bin/python ontology/build_class_diagram.py
+    python ontology/build_class_diagram.py
 
 Reads the ontology (not the Python spec), so the diagram always matches
 commerce_core.ttl. Output: commerce_core_class_diagram.svg.

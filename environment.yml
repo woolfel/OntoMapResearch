@@ -1,0 +1,15 @@
+# Conda environment for OntoMapResearch.
+#
+#   conda env create -f environment.yml
+#   conda activate ontomap
+#
+# Python packages come from requirements.txt (dbt-sqlite is only published on
+# PyPI), so the two files never disagree.
+name: ontomap
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - -r requirements.txt

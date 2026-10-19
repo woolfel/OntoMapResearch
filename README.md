@@ -110,23 +110,41 @@ It runs as an HTTP service on localhost (`POST /map`, `/identify`; `GET /sources
 
 ### Getting started
 
+Create the Python environment once, with conda:
+
 ```bash
-python3 -m venv ontology/.venv && ontology/.venv/bin/pip install rdflib
+conda env create -f environment.yml
 ```
 
 ```bash
+conda activate ontomap
+```
+
+or with a virtual environment:
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+```
+
+```bash
+source .venv/bin/activate
+```
+
+`requirements.txt` installs `rdflib` (ontologies, mapping service, diagrams) and `dbt-core` with `dbt-sqlite` (the models in `dbt/`). Run the commands below with the environment activated.
+
+```bash
 # map a source schema onto the canonical model (JSON to stdout)
-ontology/.venv/bin/python ontology/mapping_service.py map --source bobs_uncle.sql --target canonical_ecommerce.sql --concept Order
+python ontology/mapping_service.py map --source bobs_uncle.sql --target canonical_ecommerce.sql --concept Order
 ```
 
 ```bash
 # or run the HTTP service on 127.0.0.1:8765
-ontology/.venv/bin/python ontology/mapping_service.py serve
+python ontology/mapping_service.py serve
 ```
 
 ```bash
 # after editing core_spec.py or binding_spec.py: rebuild, validate and re-run the competency questions
-python3 ontology/build_ontologies.py && ontology/.venv/bin/python ontology/run_competency_questions.py
+python3 ontology/build_ontologies.py && python ontology/run_competency_questions.py
 ```
 
 

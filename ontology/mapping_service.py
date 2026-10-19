@@ -20,10 +20,10 @@ Scripts the ontology does not know get name-similarity hints only, marked
 
 Run (from the repository root):
 
-    ontology/.venv/bin/python ontology/mapping_service.py serve [--port 8765]
-    ontology/.venv/bin/python ontology/mapping_service.py map --source acme_shopping.sql --target canonical_ecommerce.sql
-    ontology/.venv/bin/python ontology/mapping_service.py identify big_river.sql
-    ontology/.venv/bin/python ontology/mapping_service.py sources
+    python ontology/mapping_service.py serve [--port 8765]
+    python ontology/mapping_service.py map --source acme_shopping.sql --target canonical_ecommerce.sql
+    python ontology/mapping_service.py identify big_river.sql
+    python ontology/mapping_service.py sources
 
 HTTP API (JSON in, JSON out; binds to 127.0.0.1 only):
 

@@ -1,6 +1,6 @@
 """Draw commerce_binding.ttl as an editable SVG.
 
-    ontology/.venv/bin/python ontology/build_binding_diagram.py
+    python ontology/build_binding_diagram.py
 
 Reads the binding ontology (and the core ontology for labels) and draws
 three parts in commerce_binding_diagram.svg:
