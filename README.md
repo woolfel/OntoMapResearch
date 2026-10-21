@@ -1,5 +1,20 @@
 # OntoMapResearch
 
+## Categories of Ontology
+
+Historically, ontology projects have tried to capture the entire world. OpenCyc spent over three decades building a world ontology. An alternative approach is to build focused ontologies that handle a specific class of operations. There are many ways to organize ontologies. One approach is inspired by writing: who, what, when, where, why, how.
+
+| Category | Question it answers | Typical concepts |
+|---|---|---|
+| **Who** | Agents in your application | Planning, reasoning, evaluation |
+| **What** | What things mean and their context | Products, promotions, transactions |
+| **When** | When does an operation happen, and for how long is it valid? | Order of operation, lifecycle, effective/expiration date |
+| **Where** | Where is the data stored and the data binding | Addresses, locations, regions; tables and columns |
+| **Why** | Why should the agent perform an operation | Reasons, purposes, intent |
+| **How** | How should the agent perform an operation | Methods, channels, processes, formats |
+
+Today it is common to put all of this into SKILLS.md markdown files. The flaw of this approach is the LLM may ignore the guardrails, or a prompt attack could produce undesirable behavior. Agent operations should be managed by an external harness or control plane. Without an external system controlling the agent, you get situations like agent deleting a person's emails. No amount of "stop right now" will terminate the delete process if the LLM is the only way to control the behavior.
+
 ## Goal
 
 The goal of the project is to explore how agents should use skills and tools with ontologies in data engineering. A common task in data engineering is ingesting data and normalizing it to a canonical model.
