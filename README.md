@@ -25,7 +25,7 @@ The approach here is deliberately small: model only the concepts that the schema
 
 The ontology is split in two:
 
-| | Concept ontology | Binding ontology |
+| | Concept ontology (What) | Binding ontology (Where) |
 |---|---|---|
 | File | `ontology/commerce_core.ttl` | `ontology/commerce_binding.ttl` |
 | Answers | *What* is an order, a promotion, a return? | *Where* and *how* does each store keep it? |
