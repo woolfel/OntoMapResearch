@@ -13,7 +13,7 @@ Historically, ontology projects have tried to capture the entire world. OpenCyc 
 | **Why** | Why should the agent perform an operation | Reasons, purposes, intent |
 | **How** | How should the agent perform an operation | Methods, channels, processes, formats |
 
-Today it is common to put all of this into SKILLS.md markdown files. The flaw of this approach is the LLM may ignore the guardrails, or a prompt attack could produce undesirable behavior. Agent operations should be managed by an external harness or control plane. Without an external system controlling the agent, you get situations like agent deleting a person's emails. No amount of "stop right now" will terminate the delete process if the LLM is the only way to control the behavior.
+Today it is common to put all of this into SKILLS.md markdown files. The flaw of this approach is the LLM may ignore the guardrails, or a prompt attack could produce undesirable behavior. Agent operations should be managed by an external harness or control plane. Without an external system controlling the agent, you get situations like agent deleting a person's emails. The user can yell "stop right now" until they turn blue, but the LLM isn't going to stop.
 
 ## Goal
 
