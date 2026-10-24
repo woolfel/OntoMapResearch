@@ -9,6 +9,15 @@ The commerce ontologies already record how each known schema expresses each busi
 skill gets those mappings from `ontology/mapping_service.py` so you never re-derive what is already
 decided, and tells you exactly which parts are left for you to infer.
 
+## Contents
+
+1. [Step 1: Get the mappings](#step-1-get-the-mappings): call the mapping tool from the command line or over HTTP
+2. [Step 2: Read the result](#step-2-read-the-result): what each field and status in the JSON means
+3. [Step 3: Apply the rules](#step-3-apply-the-rules): what you may use as given and what you may infer
+4. [Step 4: When a schema is unknown](#step-4-when-a-schema-is-unknown): how to treat name-similarity hints
+5. [Step 5: Report](#step-5-report): how to present the mapping plan with provenance
+6. [Example (real output, abridged)](#example-real-output-abridged): a real response to learn the shape from
+
 ## Step 1: Get the mappings
 
 Pass the **source** and **target** schema scripts (the `CREATE TABLE` SQL). Use whichever interface is
